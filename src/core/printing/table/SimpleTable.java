@@ -16,6 +16,7 @@ public class SimpleTable implements BasicElement {
 	}
 
 	public int getNumberOfCellsCurrentline() {
+		if (this.currentline==null){return 0;}
 		return currentline.getNumberOfCells();
 	}
 
@@ -32,10 +33,56 @@ public class SimpleTable implements BasicElement {
 	  }
 
 	@Override
-	public void add(BasicElement e) {
-		this.currentline.addCell(new CellPrinter(e));
+	public void add(BasicElement e) throws Exception {
+		 CellPrinter cell = new CellPrinter(e);
+		 addCell(cell);
 		
 	}
+	
+	 public void addCell(CellPrinter cellPrinter) throws Exception{
+		   createFirstLineIfFirstCell(); 
+		  checkLineLengthAndThrowException(cellPrinter);
+		  currentline.addCell(cellPrinter);
+	  }
+	 
+	
+	private void checkLineLengthAndThrowException(CellPrinter cellPrinter)
+				throws Exception {
+			if (isOutOfBoundCellAdding()){
+				  throw new Exception("Can't add cell " + cellPrinter +": maximum number of cell per line is reached");
+			  }
+		}
+	  
+	  public void addCell(String cellPrinter) throws Exception{
+		  CellPrinter cell = new CellPrinter(cellPrinter);
+		  addCell(cell);
+	  }
+	  
+
+	  protected boolean isOutOfBoundCellAdding() {
+			if (this.getNumberOfRow()==0||this.getNumberOfRow()==1){return false;}
+			return this.getNumberOfCellsCurrentline()>=this.getMaxNumberOfCol();
+		}
+	  
+	  
+	  public int getMaxNumberOfCol() {
+		 if (this.lines.size()==0){
+			 return 0;  
+		 } else {
+			 return this.lines.get(0).getNumberOfCells();
+		 }
+	  }
+
+
+		private void createFirstLineIfFirstCell() {
+			if (currentline==null){
+				  this.newline();
+			  }
+		}
+	  
+	  
+	  
+	
 
 	
 	public void newline(){
