@@ -6,7 +6,6 @@ public interface BasicElement {
 	
 	  public String accept(PrintingVisitor visitor);
 	  
-	  void add(BasicElement e) throws Exception;
 
 
 	

@@ -18,7 +18,7 @@ public class Doc {
 	String title;
 	String subtitle;
 	Sequence mainSeq = new Sequence();
-	Stack<BasicElement> stackElement = new Stack<BasicElement>();
+	Stack<BasicElementWithChild> stackElement = new Stack<BasicElementWithChild>();
 	boolean Landscape = false; 
 	String documentClass = "scrartcl";
 	Bibliography bibliography = new Bibliography();
@@ -169,7 +169,7 @@ public class Doc {
 	}
 
 
-	public BasicElement getCurrentElement() {
+	public BasicElementWithChild getCurrentElement() {
 		return stackElement.peek();
 	}
 
@@ -179,7 +179,7 @@ public class Doc {
 	}
 
 
-	public BasicElement push(BasicElement item) {
+	public BasicElement push(BasicElementWithChild item) {
 		return stackElement.push(item);
 	}
 

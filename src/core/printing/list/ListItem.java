@@ -3,11 +3,12 @@ package core.printing.list;
 import java.util.Vector;
 
 import core.printing.BasicElement;
+import core.printing.BasicElementWithChild;
 import core.printing.Sequence;
 import core.printing.SimpleText;
 import core.printing.visitor.PrintingVisitor;
 
-public class ListItem implements BasicElement{
+public class ListItem implements BasicElementWithChild{
    Vector<Sequence> itemPrint = new Vector<Sequence>();
    
    public void addItem(String t) throws Exception{

@@ -107,38 +107,58 @@ public void removeHeader() {
   
   
   
- 
+  public void addCell(CellPrinter cellPrinter){
+	  currentline.addCell(cellPrinter);
+  }
+  
+  public void addCell(String cellPrinter) throws Exception{
+	  createFirstLineIfFirstCell(); 
+	  checkLineLengthAndThrowException(cellPrinter);
+	  currentline.addCell(cellPrinter);
+  }
 
 
 
-
-  public int getMaxNumberOfCol() {
-		if (this.listOfAlignements.isEmpty()){
-		  return getNumberOfColsWhenNoAlignementDefined();
-		}
-		else {
-			return this.listOfAlignements.size();
-		}
-	}
+private void checkLineLengthAndThrowException(String cellPrinter)
+		throws Exception {
+	if (isOutOfBoundCellAdding()){
+		  throw new Exception("Can't add cell " + cellPrinter +": maximum number of cell per line is reached");
+	  }
+}
 
 
 
-
-
-@Override
 protected boolean isOutOfBoundCellAdding() {
-	if (this.listOfAlignements.size()!=0){
-	  return (this.getNumberOfCellsCurrentline() >= this.getMaxNumberOfCol());
-	  
-	} else {
-	 return super.isOutOfBoundCellAdding();
+	return this.getNumberOfRow()!=1 && this.getNumberOfCellsCurrentline()==this.getMaxNumberOfCol();
+}
+
+
+
+private void createFirstLineIfFirstCell() {
+	if (currentline==null){
+		  this.newline();
+	  }
+}
+  
+  
+  
+public int getMaxNumberOfCol() {
+	if (this.listOfAlignements.isEmpty()){
+	  return getNumberOfColsWhenNoAlignementDefined();
+	}
+	else {
+		return this.listOfAlignements.size();
 	}
 }
 
 
 
 private int getNumberOfColsWhenNoAlignementDefined() {
-	return super.getMaxNumberOfCol();
+	if (this.getNumberOfRow()==0){
+	  	return -1;
+	  } else {
+	      return this.lines.get(0).getNumberOfCells();
+	  }
 }
 
 public TableSize getSize() {

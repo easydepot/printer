@@ -2,7 +2,7 @@ package core.printing;
 
 import core.printing.visitor.PrintingVisitor;
 
-public class Quote implements BasicElement {
+public class Quote implements BasicElementWithChild {
 
 	
 	Sequence content = new Sequence();

@@ -9,11 +9,7 @@ public class NewPage  implements BasicElement  {
 		  return visitor.visit(this);
 	}
 
-	@Override
-	public void add(BasicElement e) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	public void newline() {
 	}

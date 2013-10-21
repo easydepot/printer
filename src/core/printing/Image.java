@@ -34,11 +34,6 @@ public String accept(PrintingVisitor visitor) {
 	return visitor.visit(this);
 }
 
-@Override
-public void add(BasicElement e) throws Exception {
-	// TODO Auto-generated method stub
-	
-}
 
 public File getFile() {
 	return file;

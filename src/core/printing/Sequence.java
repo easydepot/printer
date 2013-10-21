@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import core.printing.visitor.PrintingVisitor;
 
-public class Sequence implements BasicElement {
+public class Sequence implements BasicElementWithChild {
 	
 	
 	Vector<BasicElement> v = new Vector<BasicElement>();

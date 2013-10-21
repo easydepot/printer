@@ -11,43 +11,5 @@ public class TestTableUtil {
 		  t.addAlignement(new ClassicAlignement(ALIGN.CENTER));
 		return t;
 	}
-	
-	public static core.printing.table.TablePrinter givenATableWithTwoCellAlignement() {
-		TablePrinter t = givenATableWithAlignement();
-		 t.addAlignement(new ClassicAlignement(ALIGN.CENTER));
-		return t;
-	}
-	
-	public static SimpleTable givenATableWithOneLineofTwoCellandOneLineOfOneCell() throws Exception{
-		SimpleTable t = new SimpleTable();
-		t.newline();
-		t.lines.get(0).addCell("value1");
-		t.lines.get(0).addCell("value2");
-		t.newline();
-		t.lines.get(1).addCell("v1");
-		return t;
-	}
-	
-	public static SimpleTable givenATableWithTwoLinesofTwoCells() throws Exception{
-		SimpleTable t = new SimpleTable();
-		t.newline();
-		t.lines.get(0).addCell("value1");
-		t.lines.get(0).addCell("value2");
-		t.newline();
-		t.lines.get(1).addCell("v1");
-		t.lines.get(1).addCell("v2");
-		return t;
-	}
-	
-	
-	public static SimpleTable givenATableWithOneLine()
-			throws Exception {
-		SimpleTable t = new SimpleTable();
-
-		t.newline();
-		t.lines.get(0).addCell("value1");
-		t.lines.get(0).addCell("value2");
-		return t;
-	}
 
 }

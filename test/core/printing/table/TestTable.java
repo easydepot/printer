@@ -1,10 +1,13 @@
 package core.printing.table;
 
 import static org.junit.Assert.fail;
+import junit.framework.Assert;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+
+import core.printing.table.TablePrinter;
 
 public class TestTable extends TestSimpleTable{
 	
@@ -29,94 +32,6 @@ public class TestTable extends TestSimpleTable{
 	}
 	
 	@Test
-	public void test_Table_alignement_centered_one_columns_addOneCellMore() throws Exception {
-	  core.printing.table.TablePrinter t = TestTableUtil.givenATableWithAlignement();
-	  t.addCell("h1");
-	  try {
-		  t.addCell("h2");
-		  fail("SHALL throw an exception");
-	  }
-	  catch (Exception e){
-		  
-	  }
-	}
-	
-	@Test
-	public void test_Table_alignement_centered_one_columns_assertthat_getMaxNumberOfCol_is_alignement_size() throws Exception {
-	  core.printing.table.TablePrinter t = TestTableUtil.givenATableWithAlignement();
-	  Assert.assertEquals(1, t.getMaxNumberOfCol());
-	}
-	
-	@Test
-	public void test_that_givenTable_alignement_centered_one_columns_assertthat_isOutofBound_returns_false() throws Exception {
-	  core.printing.table.TablePrinter t = TestTableUtil.givenATableWithAlignement();
-	  Assert.assertFalse(t.isOutOfBoundCellAdding());
-	}
-	
-	@Test
-	public void test_that_givenTable_alignement_centered_one_columns_assertthat_isOutofBound_returns_true() throws Exception {
-	  core.printing.table.TablePrinter t = TestTableUtil.givenATableWithAlignement();
-	  t.addCell("cell1");
-	  Assert.assertTrue(t.isOutOfBoundCellAdding());
-	}
-	
-	
-	
-	@Test
-	public void test_that_isOutOfBoundCellAdding_returns_false_when_table_is_empty() throws Exception {
-	  core.printing.table.TablePrinter t = new TablePrinter();
-	  Assert.assertFalse(t.isOutOfBoundCellAdding());
-	 
-	
-	}
-	
-	@Test
-	public void test_when_givenATableWithtwoCellAlignement_that_getMaxNumberOfCol_returns_alignement_size() throws Exception {
-	  core.printing.table.TablePrinter t = TestTableUtil.givenATableWithTwoCellAlignement();
-	  Assert.assertEquals(2, t.getMaxNumberOfCol());
-	}
-	
-	@Test
-	public void test_that_getNumberOfCellsCurrentline_returns_zero_when_table_empty() throws Exception {
-	  core.printing.table.TablePrinter t = new TablePrinter();
-	  Assert.assertEquals(0, t.getNumberOfCellsCurrentline());
-	 
-	
-	}
-	
-	@Test
-	public void test_that_getNumberOfCellsCurrentline_returns_one_when_firstline_has_one_cell() throws Exception {
-	  core.printing.table.TablePrinter t = new TablePrinter();
-	  t.addCell("cell1");
-	  Assert.assertEquals(1, t.getNumberOfCellsCurrentline());
-	 
-	
-	}
-	
-	@Test
-	public void test_that_gisOutOfBoundCellAdding_returns_false_when_firstline_has_one_cell() throws Exception {
-	  core.printing.table.TablePrinter t = new TablePrinter();
-	  t.addCell("cell1");
-	  Assert.assertEquals(false, t.isOutOfBoundCellAdding());
-	 
-	
-	}
-	
-	
-	
-	
-	
-	
-
-
-
-
-
-	
-	
-	
-	
-	@Test
 	public void test_addCell_create_a_cell() throws Exception {
 		sut.addCell("value1");
 		Assert.assertEquals(1, sut.getNumberOfRow());
@@ -134,7 +49,7 @@ public class TestTable extends TestSimpleTable{
 	@Test 
 	public void test_that_getMaxNumberOfCol_is_not_defined_when_emptyTablePrinter(){
 		  core.printing.table.TablePrinter t = new TablePrinter();
-		  Assert.assertEquals(0, t.getMaxNumberOfCol());
+		  Assert.assertEquals(-1, t.getMaxNumberOfCol());
 
 	}
 	
@@ -145,6 +60,19 @@ public class TestTable extends TestSimpleTable{
 
 	}
 	
-	
+	@Test
+	public void test_addCell_fails_when_too_much_cells_are_added() throws Exception {
+		sut.addCell("value1");
+		sut.addCell("value2");
+		sut.newline();
+		sut.addCell("v1");
+		sut.addCell("v2");
+		try {
+			sut.addCell("v3");
+			fail("must fail on adding too much cell on the line");
+		} catch (Exception e) {
+			
+		}
+	}
 
 }

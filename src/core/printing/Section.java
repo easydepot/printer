@@ -2,7 +2,7 @@ package core.printing;
 
 import core.printing.visitor.PrintingVisitor;
 
-public class Section implements BasicElement {
+public class Section implements BasicElementWithChild {
 	
 	String title;
 	Sequence content = new Sequence();
