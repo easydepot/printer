@@ -9,6 +9,7 @@ import org.docx4j.wml.ObjectFactory;
 import org.docx4j.wml.P;
 import org.docx4j.wml.STBrType;
 
+import core.printing.BasicElementImplementation;
 import core.printing.Image;
 import core.printing.NewLine;
 import core.printing.NewPage;
@@ -123,6 +124,12 @@ public class DocXPrinter implements PrintingVisitor {
 
 	@Override
 	public String visit(SimpleTable simpleTable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String visit(BasicElementImplementation element) {
 		// TODO Auto-generated method stub
 		return null;
 	}

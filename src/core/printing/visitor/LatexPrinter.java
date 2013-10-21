@@ -1,6 +1,7 @@
 package core.printing.visitor;
 
-import core.printing.BasicElement;
+import org.junit.Assert;
+
 import core.printing.Image;
 import core.printing.NewLine;
 import core.printing.NewPage;
@@ -20,7 +21,7 @@ import core.printing.table.alignment.TableAlignement;
 import core.printing.table.size.FixedSize;
 import core.printing.table.size.SpecialSize;
 
-public class LatexPrinter implements PrintingVisitor{
+public class LatexPrinter extends PrintingVisitorImplementation implements PrintingVisitor{
 	
 	int sectionlevel=0;
 	
@@ -91,7 +92,7 @@ public String visit(ListItem l){
   }
 
   
-  public String visit(TablePrinter t){
+  public String visit(TablePrinter t) throws Exception{
 	  String result = getTabularOpen(t);
 	 
 	  
@@ -104,7 +105,7 @@ public String visit(ListItem l){
 	  return result;
   }
 
-private String getContent(TablePrinter t) {
+private String getContent(TablePrinter t) throws Exception {
 	String returned ="";
 	  returned += "\\hline\n";
 	  for (int j=0;j<t.getNumberOfCellsCurrentline();j++){
@@ -234,13 +235,15 @@ public String visit(Image image) {
 
 @Override
 public String visit(Quote quote) {
-	// TODO Auto-generated method stub
 	return "\\quote{" + quote.getContent().accept(this) + "} " ;
 }
 
 @Override
 public String visit(SimpleTable simpleTable) {
-	// TODO Auto-generated method stub
+
+	Assert.fail("NOT Implemented");
 	return null;
 }
+
+
 }

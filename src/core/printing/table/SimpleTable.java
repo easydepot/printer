@@ -3,10 +3,10 @@ package core.printing.table;
 import java.util.Vector;
 
 import core.printing.BasicElement;
+import core.printing.BasicElementImplementation;
 import core.printing.BasicElementWithChild;
-import core.printing.visitor.PrintingVisitor;
 
-public class SimpleTable implements BasicElementWithChild {
+public class SimpleTable extends BasicElementImplementation implements BasicElementWithChild {
 	
 	Vector<LinePrinter> lines = new Vector<LinePrinter>();
 	LinePrinter currentline;
@@ -17,6 +17,7 @@ public class SimpleTable implements BasicElementWithChild {
 	}
 
 	public int getNumberOfCellsCurrentline() {
+		if (this.currentline ==null){return 0;}
 		return currentline.getNumberOfCells();
 	}
 
@@ -28,15 +29,15 @@ public class SimpleTable implements BasicElementWithChild {
 		  lines.add(l);
 	  }
 
-	public String accept(PrintingVisitor visitor) {
-	      return visitor.visit(this);
-	  }
+
 
 	@Override
 	public void add(BasicElement e) {
 		this.currentline.addCell(new CellPrinter(e));
 		
 	}
+	
+	
 
 	
 	public void newline(){
@@ -45,12 +46,27 @@ public class SimpleTable implements BasicElementWithChild {
 	  }
 
 	  
-	  public CellPrinter getLastElement() {
-	  	return currentline.getLastElement();
+	  public BasicElement getLastElement() {
+	  	return currentline.getLastElement().getContent();
 	  }
 
-	  public CellPrinter getCell(int row,int col){
+	  public BasicElement getCellContent(int row,int col) throws Exception{
+		  throwAnExceptionIfRowGreaterThanTableLength(row);
+		  
+	  	  return this.getCell(row, col).getContent();
+	  }
+	  
+	  public CellPrinter getCell(int row,int col) throws Exception{
+		  throwAnExceptionIfRowGreaterThanTableLength(row);
+		  
 	  	  return this.lines.get(row).cells.get(col);
 	  }
+
+	private void throwAnExceptionIfRowGreaterThanTableLength(int row)
+			throws Exception {
+		if (row >= this.lines.size()){
+			  throw new Exception("Row " + row + "is not defined" );
+		  }
+	}
 	  	  
 }

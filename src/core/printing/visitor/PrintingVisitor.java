@@ -1,5 +1,6 @@
 package core.printing.visitor;
 
+import core.printing.BasicElementImplementation;
 import core.printing.Image;
 import core.printing.NewLine;
 import core.printing.NewPage;
@@ -20,7 +21,7 @@ public interface PrintingVisitor {
 	    String visit(SimpleTable simpleTable);
 	    String visit(ListItem listPrint);
 	    String visit(SimpleText engine);
-	    String visit(TablePrinter body);
+	    String visit(TablePrinter body) throws Exception;
 	    String visit(Sequence body);
 		String visit(FixedSize fixedSize);
 		String visit(SpecialSize specialSize);
@@ -30,6 +31,7 @@ public interface PrintingVisitor {
 		String visit(TableOfContent tableOfContent);
 		String visit(Image image);
 		String visit(Quote quote);
+		String visit(BasicElementImplementation element);
 	
 
 }

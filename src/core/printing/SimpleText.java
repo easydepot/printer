@@ -1,8 +1,7 @@
 package core.printing;
 
-import core.printing.visitor.PrintingVisitor;
 
-public class SimpleText implements BasicElement{
+public class SimpleText extends BasicElementImplementation{
 	String text;
 	boolean italic = false;
 	boolean bold = false;
@@ -48,10 +47,7 @@ public class SimpleText implements BasicElement{
 		this.text = text;
 	}
 
-	 public String accept(PrintingVisitor visitor)
-	  {
-	      return visitor.visit(this);
-	  }
+
 
 	
 

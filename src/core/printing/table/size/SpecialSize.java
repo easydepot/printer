@@ -1,6 +1,5 @@
 package core.printing.table.size;
 
-import core.printing.BasicElement;
 import core.printing.visitor.PrintingVisitor;
 
 public class SpecialSize
@@ -23,7 +22,6 @@ public class SpecialSize
 
 		@Override
 		public String accept(PrintingVisitor visitor) {
-			// TODO Auto-generated method stub
 			return visitor.visit(this);
 		}
 
