@@ -1,13 +1,16 @@
 package core.printing.table;
 
+import java.awt.Color;
+
 import core.printing.BasicElement;
 import core.printing.SimpleText;
+import core.printing.table.alignment.ClassicAlignement;
 
 public class CellPrinter {
-  BasicElement content;
-  int colspan = 0;
-  String colspantype = "c";
-  String color;
+  private BasicElement content;
+  private int colspan = 0;
+  private ClassicAlignement.ALIGN colspantype = ClassicAlignement.ALIGN.CENTER;
+  private Color color = Color.WHITE;
   
   
 
@@ -19,11 +22,11 @@ public void setContent(BasicElement content) {
 	this.content = content;
 }
 
-public String getColor() {
+public Color getColor() {
 	return color;
 }
 
-public void setColor(String color) {
+public void setColor(Color color) {
 	this.color = color;
 }
 
@@ -35,11 +38,11 @@ public void setColspan(int colspan) {
 	this.colspan = colspan;
 }
 
-public String getColspantype() {
+public ClassicAlignement.ALIGN  getColspantype() {
 	return colspantype;
 }
 
-public void setColspantype(String colspantype) {
+public void setColspantype(ClassicAlignement.ALIGN  colspantype) {
 	this.colspantype = colspantype;
 }
 
@@ -53,8 +56,6 @@ public CellPrinter(BasicElement content) {
 	this.content = content;
 }
   
-  public BasicElement getText(){
-	  return content;
-  }
+
   
 }

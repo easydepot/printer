@@ -4,7 +4,7 @@ import core.printing.visitor.PrintingVisitor;
 
 public interface BasicElement {
 	
-	  public String accept(PrintingVisitor visitor);
+	  public String accept(PrintingVisitor visitor) throws Exception;
 	  
 
 

@@ -72,6 +72,16 @@ public class TestSimpleTable {
 		sut.newline();
 		SimpleText e = new SimpleText("text1");
 		sut.add(e);
+		Assert.assertEquals(e, sut.getCellContent(0, 0));
+			
+		
+	}
+	
+	@Test
+	public void test_addCell_positive_case() throws Exception {
+		sut.newline();
+		CellPrinter e = new CellPrinter("text1");
+		sut.addCell(e);
 		Assert.assertEquals(e, sut.getCell(0, 0));
 			
 		

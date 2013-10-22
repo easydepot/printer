@@ -2,7 +2,7 @@ package core.printing;
 
 import core.printing.visitor.PrintingVisitor;
 
-public class Quote implements BasicElementWithChild {
+public class Quote extends BasicElementWithChild {
 
 	
 	Sequence content = new Sequence();
@@ -27,11 +27,7 @@ public class Quote implements BasicElementWithChild {
 		}
 	}
 
-	@Override
-	public String accept(PrintingVisitor visitor) {
-		// TODO Auto-generated method stub
-		return visitor.visit(this);
-	}
+
 
 	@Override
 	public void add(BasicElement e) throws Exception {
@@ -40,8 +36,7 @@ public class Quote implements BasicElementWithChild {
 		
 	}
 
-	public void newline() {
-	}
+	
 
 	
 

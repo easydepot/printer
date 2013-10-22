@@ -1,6 +1,5 @@
 package core.printing.visitor;
 
-import org.junit.Assert;
 
 import core.printing.Image;
 import core.printing.NewLine;
@@ -33,12 +32,12 @@ public class LatexPrinter extends PrintingVisitorImplementation implements Print
 		this.sectionlevel = sectionlevel;
 	}
 
-	public static String latexize(String s){
-		if (s==null){return "";}
+	public static String latexize(String s) throws Exception{
+		if (s==null){throw new Exception("Try to print a null value");}
 		return s.replace("_", "\\_\\-");
 	}
 	
-public String visit(ListItem l){
+public String visit(ListItem l) throws Exception{
 	  String result = "";
 	  if (l.size()==0){return result;}
 	  result += "\\begin{itemize}\n";
@@ -49,16 +48,16 @@ public String visit(ListItem l){
 	  return result;
   }
   
-  public String visit(SimpleText t){
+  public String visit(SimpleText t) throws Exception{
 	  if (t.isBold()) return "\\textbf{" + latexize(t.getText()) +"}";
 	  if (t.isItalic()) return "\\textit{" + latexize(t.getText()) +"}";
 	  if (t.getColor()!=null) return "\\textcolor{" + t.getColor() + "}{" + latexize(t.getText()) +"}";
 	  return  latexize(t.getText());
   }
   
-  public String visit(Sequence s){
+  public String visit(Sequence s) throws Exception{
 	  String result="";
-	  if (s == null){return "";}
+	  if (s == null){throw new Exception("Sequence is null");}
 	  for (int i = 0; i < s.size();i++){
 		  
 		  result += s.get(i).accept(this) +" ";
@@ -151,7 +150,7 @@ private String getAlignement(TablePrinter t) {
 	return returned;
 }
 
-private String getTabularOpen(TablePrinter t) {
+private String getTabularOpen(TablePrinter t) throws Exception {
 	String returnval ="";
 	  if (t.isLongtable()){
 		  returnval +=  "\\begin{longtable}";
@@ -165,8 +164,9 @@ private String getTabularOpen(TablePrinter t) {
 /**
  * @param c The cell to print in LAtex
  * @return A String containing the latex representation of the cell.
+ * @throws Exception 
  */
-private String printCell(CellPrinter c) {
+private String printCell(CellPrinter c) throws Exception {
 	String result ="";
 	if (c.getColspan()!=0){
 		  result += "\\multicolumn{" + c.getColspan() + "}{|" + c.getColspantype() + "|}{";  
@@ -175,7 +175,7 @@ private String printCell(CellPrinter c) {
 	  if (c.getColor()!=null){
 		  result +=  "\\cellcolor{" + c.getColor() + "} ";
 	  }
-	  result +=  c.getText().accept(this) ;
+	  result +=  c.getContent().accept(this) ;
 	  if (c.getColspan()!=0){
 		  result += "}";  
 	  }
@@ -189,7 +189,7 @@ public String visit(FixedSize fixedSize) {
 }
 
 @Override
-public String visit(Section section) {
+public String visit(Section section) throws Exception {
 	String result = "";
 	if (this.sectionlevel==0) {result += "\n\\section{"+ latexize(section.getTitle()) + "}\n";}
 	if (this.sectionlevel==1) {result += "\n\\subsection{"+ latexize(section.getTitle()) + "}\n";}
@@ -234,14 +234,14 @@ public String visit(Image image) {
 }
 
 @Override
-public String visit(Quote quote) {
+public String visit(Quote quote) throws Exception {
 	return "\\quote{" + quote.getContent().accept(this) + "} " ;
 }
 
 @Override
 public String visit(SimpleTable simpleTable) {
 
-	Assert.fail("NOT Implemented");
+	
 	return null;
 }
 

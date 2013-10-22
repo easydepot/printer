@@ -1,4 +1,4 @@
-package test;
+package core.printing.visitor;
 
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.junit.Test;

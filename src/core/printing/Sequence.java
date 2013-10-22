@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import core.printing.visitor.PrintingVisitor;
 
-public class Sequence implements BasicElementWithChild {
+public class Sequence extends BasicElementWithChild {
 	
 	
 	Vector<BasicElement> v = new Vector<BasicElement>();
@@ -54,7 +54,7 @@ public class Sequence implements BasicElementWithChild {
 
 
 	@Override
-	public String accept(PrintingVisitor visitor) {
+	public String accept(PrintingVisitor visitor) throws Exception {
 		
 		
 		return visitor.visit(this);

@@ -19,19 +19,19 @@ public interface PrintingVisitor {
 	
 	
 	    String visit(SimpleTable simpleTable);
-	    String visit(ListItem listPrint);
-	    String visit(SimpleText engine);
+	    String visit(ListItem listPrint) throws Exception;
+	    String visit(SimpleText engine) throws Exception;
 	    String visit(TablePrinter body) throws Exception;
-	    String visit(Sequence body);
+	    String visit(Sequence body) throws Exception;
 		String visit(FixedSize fixedSize);
 		String visit(SpecialSize specialSize);
-		String visit(Section section);
+		String visit(Section section) throws Exception;
 		String visit(NewLine newLine);
 		String visit(NewPage newPage);
 		String visit(TableOfContent tableOfContent);
 		String visit(Image image);
-		String visit(Quote quote);
-		String visit(BasicElementImplementation element);
+		String visit(Quote quote) throws Exception;
+		String visit(BasicElementImplementation element) throws Exception;
 	
 
 }

@@ -3,10 +3,9 @@ package core.printing.table;
 import java.util.Vector;
 
 import core.printing.BasicElement;
-import core.printing.BasicElementImplementation;
 import core.printing.BasicElementWithChild;
 
-public class SimpleTable extends BasicElementImplementation implements BasicElementWithChild {
+public class SimpleTable extends BasicElementWithChild  {
 	
 	Vector<LinePrinter> lines = new Vector<LinePrinter>();
 	LinePrinter currentline;
@@ -31,13 +30,14 @@ public class SimpleTable extends BasicElementImplementation implements BasicElem
 
 
 
-	@Override
 	public void add(BasicElement e) {
 		this.currentline.addCell(new CellPrinter(e));
 		
 	}
 	
-	
+	 public void addCell(CellPrinter cellPrinter){
+		  currentline.addCell(cellPrinter);
+	  }
 
 	
 	public void newline(){

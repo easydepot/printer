@@ -1,7 +1,8 @@
-package test.latex;
+package core.printing.visitor;
 
-import junit.framework.Assert;
+import static org.junit.Assert.fail;
 
+import  org.junit.Assert;
 import org.junit.Test;
 
 import core.printing.Section;
@@ -9,6 +10,7 @@ import core.printing.Sequence;
 import core.printing.SimpleText;
 import core.printing.WarningText;
 import core.printing.table.TablePrinter;
+import core.printing.table.TestTableUtil;
 import core.printing.table.alignment.ClassicAlignement;
 import core.printing.table.alignment.ClassicAlignement.ALIGN;
 import core.printing.table.alignment.SizedAlignement;
@@ -19,7 +21,7 @@ import core.printing.visitor.LatexPrinter;
 public class TestLatexVisitor {
 	
 	@Test
-	public void test_Sequence_Empty() {
+	public void test_Sequence_Empty() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		Sequence s = new Sequence();
 		Assert.assertEquals("",p.visit(s));
@@ -29,7 +31,7 @@ public class TestLatexVisitor {
 	
 	
 	@Test
-	public void test_SimpleText() {
+	public void test_SimpleText() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		SimpleText s = new SimpleText("aaa");
 		Assert.assertEquals("aaa",p.visit(s));
@@ -37,7 +39,7 @@ public class TestLatexVisitor {
 	}
 	
 	@Test
-	public void test_SimpleText_italic() {
+	public void test_SimpleText_italic() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		SimpleText s = new SimpleText("aaa");
 		s.setItalic(true);
@@ -46,7 +48,7 @@ public class TestLatexVisitor {
 	}
 	
 	@Test
-	public void test_SimpleText_color() {
+	public void test_SimpleText_color() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		SimpleText s = new SimpleText("aaa");
 		s.setColor("red");
@@ -55,7 +57,7 @@ public class TestLatexVisitor {
 	}
 	
 	@Test
-	public void test_WarningText() {
+	public void test_WarningText() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		WarningText s = new WarningText("aaa");
 		Assert.assertEquals("\\textcolor{red}{aaa}",p.visit(s));
@@ -63,7 +65,7 @@ public class TestLatexVisitor {
 	}
 	
 	@Test
-	public void test_SimpleText_bold() {
+	public void test_SimpleText_bold() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		SimpleText s = new SimpleText("aaa");
 		s.setBold(true);
@@ -130,7 +132,114 @@ public class TestLatexVisitor {
 	
 	
 	
+	@Test
+	public void test_Section() throws Exception {
+		LatexPrinter p = new LatexPrinter();
+		Section s = new Section("title");
 	
+		Assert.assertEquals("\n\\section{title}\n",p.visit(s));
+		
+	}
+	
+	
+	@Test
+	public void test_latexize_idempotent_when_normal_text() throws Exception {
+		Assert.assertEquals("aaa", LatexPrinter.latexize("aaa"));
+	}
+	
+	@Test
+	public void test_latexize_when_underscore() throws Exception {
+		Assert.assertEquals("a\\_\\-a", LatexPrinter.latexize("a_a"));
+	}
+	
+	@Test
+	public void test_latexize_when_null() throws Exception {
+		
+		try {
+			LatexPrinter.latexize(null);
+			fail("must throw an exception");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void test_VisitTable() throws Exception {
+	core.printing.table.TablePrinter t = new TablePrinter();
+	t.addHeader("h1");
+	t.addHeader("h2");
+	t.addHeader("h3");
+	t.addCell("c1");
+	t.addCell("c2");
+	t.addCell("c3");
+	
+	LatexPrinter p = new LatexPrinter();
+	p.visit(t);
+	}
+	
+	@Test
+	public void test_Sectiob_SubSection() throws Exception {
+		LatexPrinter p = new LatexPrinter();
+		Section s = new Section("title");
+		Section s2 = new Section("subtitle");
+		s.add(s2);
+	  
+		Assert.assertEquals("\n\\section{title}\n\n\\subsection{subtitle}\n ",p.visit(s));
+		
+	}
+	
+	@Test
+	public void test_SubSection() throws Exception {
+		LatexPrinter p = new LatexPrinter();
+		Section s = new Section("title");
+		p.setSectionlevel(1);
+	    
+	  
+		Assert.assertEquals("\n\\subsection{title}\n",p.visit(s));
+		
+	}
+	
+	@Test
+	public void test_SubSubSection() throws Exception {
+		LatexPrinter p = new LatexPrinter();
+		Section s = new Section("title");
+		p.setSectionlevel(2);
+	    
+	  
+		Assert.assertEquals("\n\\subsubsection{title}\n",p.visit(s));
+		
+	}
+	
+	@Test
+	public void test_Paragraph() throws Exception {
+		LatexPrinter p = new LatexPrinter();
+		Section s = new Section("title");
+		p.setSectionlevel(3);
+	    
+	  
+		Assert.assertEquals("\n\\paragraph{title}\n",p.visit(s));
+		
+	}
+	
+	@Test
+	public void test_Section_withText() throws Exception {
+		LatexPrinter p = new LatexPrinter();
+		Section s = new Section("title");
+		s.add(new SimpleText("aaa"));
+		Assert.assertEquals("\n\\section{title}\naaa ",p.visit(s));
+		
+	}
+	
+	@Test
+	public void test_Section_withTwoText() throws Exception {
+		LatexPrinter p = new LatexPrinter();
+		Section s = new Section("title");
+		s.add(new SimpleText("aaa"));
+		s.add(new SimpleText("bbb"));
+		Assert.assertEquals("\n\\section{title}\naaa bbb ",p.visit(s));
+		
+	}
 	
 	@Test
 	public void test_Table() throws Exception {
@@ -147,25 +256,8 @@ public class TestLatexVisitor {
 	}
 	
 	@Test
-	public void test_latexize_idempotent_when_normal_text() {
-		Assert.assertEquals("aaa", LatexPrinter.latexize("aaa"));
-	}
-	
-	@Test
-	public void test_latexize_when_underscore() {
-		Assert.assertEquals("a\\_\\-a", LatexPrinter.latexize("a_a"));
-	}
-	
-	@Test
-	public void test_latexize_when_null() {
-		Assert.assertEquals("", LatexPrinter.latexize(null));
-	}
-	
-	
-	@Test
 	public void test_Table_noAlignement() throws Exception {
 	core.printing.table.TablePrinter t = new TablePrinter();
-	
 	t.addHeader("h1");
 	t.addHeader("h2");
 	t.addHeader("h3");
@@ -178,13 +270,13 @@ public class TestLatexVisitor {
 	
 	}
 	
+	
+	
 	@Test
 	public void test_Table_alignement_centered() throws Exception {
-	core.printing.table.TablePrinter t = new TablePrinter();
+	core.printing.table.TablePrinter t = TestTableUtil.givenATableWithAlignement();
 	t.addAlignement(new ClassicAlignement(ALIGN.CENTER));
 	t.addAlignement(new ClassicAlignement(ALIGN.CENTER));
-	t.addAlignement(new ClassicAlignement(ALIGN.CENTER));
-	
 	t.addHeader("h1");
 	t.addHeader("h2");
 	t.addHeader("h3");
@@ -193,10 +285,44 @@ public class TestLatexVisitor {
 	t.addCell("c2");
 	t.addCell("c3");
 	LatexPrinter p = new LatexPrinter();
-	System.out.print(p.visit(t));
 	Assert.assertTrue(p.visit(t).contains("|c|"));
 	
 	}
+	
+	
+	@Test
+	public void test_Table_alignement_centered_one_columns() throws Exception {
+	  core.printing.table.TablePrinter t = TestTableUtil.givenATableWithAlignement();
+	  t.addHeader("h1");
+	
+	  t.newline();
+	  t.addCell("c1");
+	
+	  LatexPrinter p = new LatexPrinter();
+	  Assert.assertTrue(p.visit(t).contains("|c|"));
+	
+	}
+	
+	
+	
+	@Test
+	public void test_Table_alignement_centered_one_columns_addOneHeaderMore() throws Exception {
+	  core.printing.table.TablePrinter t = TestTableUtil.givenATableWithAlignement();
+	  t.addHeader("h1");
+	  try {
+		  t.addHeader("h2");
+		  fail("SHALL throw an exception");
+	  }
+	  catch (Exception e){
+		  
+	  }
+	 
+	
+	}
+
+
+
+	
 	
 	@Test
 	public void test_Table_alignement_left() throws Exception {
@@ -204,7 +330,6 @@ public class TestLatexVisitor {
 	t.addAlignement(new ClassicAlignement(ALIGN.LEFT));
 	t.addAlignement(new ClassicAlignement(ALIGN.LEFT));
 	t.addAlignement(new ClassicAlignement(ALIGN.LEFT));
-
 	t.addHeader("h1");
 	t.addHeader("h2");
 	t.addHeader("h3");
@@ -223,7 +348,6 @@ public class TestLatexVisitor {
 	t.addAlignement(new ClassicAlignement(ALIGN.RIGHT));
 	t.addAlignement(new ClassicAlignement(ALIGN.RIGHT));
 	t.addAlignement(new ClassicAlignement(ALIGN.RIGHT));
-	
 	t.addHeader("h1");
 	t.addHeader("h2");
 	t.addHeader("h3");
@@ -242,7 +366,6 @@ public class TestLatexVisitor {
 	t.addAlignement(new SizedAlignement(2));
 	t.addAlignement(new SizedAlignement(2));
 	t.addAlignement(new SizedAlignement(2));
-	
 	t.addHeader("h1");
 	t.addHeader("h2");
 	t.addHeader("h3");
@@ -253,47 +376,6 @@ public class TestLatexVisitor {
 	LatexPrinter p = new LatexPrinter();
 	
 	Assert.assertTrue(p.visit(t).contains("|p{2cm}|"));
-	
-	}
-	
-	@Test
-	public void test_Table_alignement_extend() throws Exception {
-	core.printing.table.TablePrinter t = new TablePrinter();
-	t.addAlignementExtend();
-	t.addAlignementExtend();
-	t.addAlignementExtend();
-
-	t.addHeader("h1");
-	t.addHeader("h2");
-	t.addHeader("h3");
-	t.newline();
-	t.addCell("c1");
-	t.addCell("c2");
-	t.addCell("c3");
-	LatexPrinter p = new LatexPrinter();
-	
-	Assert.assertTrue(p.visit(t).contains("|X|"));
-	
-	}
-	
-	@Test
-	public void test_Table_alignement_extend_sizedTable() throws Exception {
-	core.printing.table.TablePrinter t = new TablePrinter();
-	t.setSize(14);
-	t.addAlignementSize(6);
-	t.addAlignementExtend();
-	t.addAlignementSize(6);
-	
-	t.addHeader("h1");
-	t.addHeader("h2");
-	t.addHeader("h3");
-	t.newline();
-	t.addCell("c1");
-	t.addCell("c2");
-	t.addCell("c3");
-	LatexPrinter p = new LatexPrinter();
-	
-	Assert.assertTrue(p.visit(t).contains("|X|"));
 	
 	}
 

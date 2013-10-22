@@ -107,9 +107,7 @@ public void removeHeader() {
   
   
   
-  public void addCell(CellPrinter cellPrinter){
-	  currentline.addCell(cellPrinter);
-  }
+ 
   
   public void addCell(String cellPrinter) throws Exception{
 	  createFirstLineIfFirstCell(); 

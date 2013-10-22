@@ -1,18 +1,15 @@
-package test.latex;
+package core.printing.visitor;
 
-import static org.junit.Assert.*;
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import core.printing.Section;
 import core.printing.SimpleText;
-import core.printing.visitor.LatexPrinter;
 
 public class TestLatexSection {
 
 	@Test
-	public void test_Section() {
+	public void test_Section() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		Section s = new Section("title");
 	
@@ -21,7 +18,7 @@ public class TestLatexSection {
 	}
 	
 	@Test
-	public void test_Section_with_latexprotectedcharacter() {
+	public void test_Section_with_latexprotectedcharacter() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		Section s = new Section("title_suitetitle");
 	
@@ -42,7 +39,7 @@ public class TestLatexSection {
 	}
 	
 	@Test
-	public void test_SubSection() {
+	public void test_SubSection() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		Section s = new Section("title");
 		p.setSectionlevel(1);
@@ -53,7 +50,7 @@ public class TestLatexSection {
 	}
 	
 	@Test
-	public void test_SubSubSection() {
+	public void test_SubSubSection() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		Section s = new Section("title");
 		p.setSectionlevel(2);
@@ -64,7 +61,7 @@ public class TestLatexSection {
 	}
 	
 	@Test
-	public void test_Paragraph() {
+	public void test_Paragraph() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		Section s = new Section("title");
 		p.setSectionlevel(3);

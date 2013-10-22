@@ -8,7 +8,7 @@ import core.printing.Sequence;
 import core.printing.SimpleText;
 import core.printing.visitor.PrintingVisitor;
 
-public class ListItem implements BasicElementWithChild{
+public class ListItem extends BasicElementWithChild{
    Vector<Sequence> itemPrint = new Vector<Sequence>();
    
    public void addItem(String t) throws Exception{
@@ -44,7 +44,7 @@ public class ListItem implements BasicElementWithChild{
 	return itemPrint.size();
 }
 
-public String accept(PrintingVisitor visitor)
+public String accept(PrintingVisitor visitor) throws Exception
    {
        return visitor.visit(this);
    }

@@ -1,8 +1,8 @@
 package core.printing;
 
-public interface BasicElementWithChild extends BasicElement{
+public abstract class BasicElementWithChild extends BasicElementImplementation{
 	
-	  void add(BasicElement e) throws Exception;
+	  public abstract void add(BasicElement e) throws Exception;
 
 
 }

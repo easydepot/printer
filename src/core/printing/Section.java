@@ -2,7 +2,7 @@ package core.printing;
 
 import core.printing.visitor.PrintingVisitor;
 
-public class Section implements BasicElementWithChild {
+public class Section extends BasicElementWithChild {
 	
 	String title;
 	Sequence content = new Sequence();
@@ -67,11 +67,7 @@ public class Section implements BasicElementWithChild {
 
 
 
-	@Override
-	public String accept(PrintingVisitor visitor) {
-		
-	     return visitor.visit(this);
-	}
+
 
 
 

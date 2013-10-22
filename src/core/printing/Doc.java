@@ -115,7 +115,7 @@ public class Doc {
 
 
 
-	public void print(){
+	public void print() throws Exception{
 	  try {
 		writer = new PrintWriter(new BufferedWriter(new FileWriter(this.getPath())));
 		writer.write(this.getLatex());
@@ -306,7 +306,7 @@ public class Doc {
 		this.getCurrentElement().add(new TableOfContent());
 	}
 	
-	public String getLatex(){
+	public String getLatex() throws Exception{
 		String result="";
 		LatexPrinter v = new LatexPrinter();
 		result += this.getLatexIntro();
