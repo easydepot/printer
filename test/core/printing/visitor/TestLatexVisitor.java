@@ -2,13 +2,14 @@ package core.printing.visitor;
 
 import static org.junit.Assert.fail;
 
-import  org.junit.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 
 import core.printing.Section;
 import core.printing.Sequence;
 import core.printing.SimpleText;
 import core.printing.WarningText;
+import core.printing.table.SimpleTable;
 import core.printing.table.TablePrinter;
 import core.printing.table.TestTableUtil;
 import core.printing.table.alignment.ClassicAlignement;
@@ -16,17 +17,10 @@ import core.printing.table.alignment.ClassicAlignement.ALIGN;
 import core.printing.table.alignment.SizedAlignement;
 import core.printing.table.size.FixedSize;
 import core.printing.table.size.SpecialSize;
-import core.printing.visitor.LatexPrinter;
 
 public class TestLatexVisitor {
 	
-	@Test
-	public void test_Sequence_Empty() throws Exception {
-		LatexPrinter p = new LatexPrinter();
-		Sequence s = new Sequence();
-		Assert.assertEquals("",p.visit(s));
-		
-	}
+
 	
 	
 	
@@ -73,24 +67,7 @@ public class TestLatexVisitor {
 		
 	}
 	
-	@Test
-	public void test_Sequence_OneElement() throws Exception {
-		LatexPrinter p = new LatexPrinter();
-		Sequence s = new Sequence();
-		s.addText("zzz");
-		Assert.assertEquals("zzz ",p.visit(s));
-		
-	}
 	
-	@Test
-	public void test_Sequence_SeveralElement() throws Exception {
-		LatexPrinter p = new LatexPrinter();
-		Sequence s = new Sequence();
-		s.addText("zzz");
-		s.addText("zzz");
-		Assert.assertEquals("zzz zzz ",p.visit(s));
-		
-	}
 	
 	@Test
 	public void test_FixedSize() {
@@ -108,25 +85,7 @@ public class TestLatexVisitor {
 		
 	}
 	
-	@Test
-	public void test_Sequence_Nominal() throws Exception {
-		LatexPrinter p = new LatexPrinter();
-		Sequence s = new Sequence();
-		s.add(new SimpleText("aaa"));
-		s.add(new SimpleText("bbb"));
-		Assert.assertEquals("aaa bbb ",p.visit(s));
-		
-	}
 	
-	@Test
-	public void test_Sequence_Section() throws Exception {
-		LatexPrinter p = new LatexPrinter();
-		Sequence s = new Sequence();
-		s.add(new SimpleText("aaa"));
-		s.add(new Section("bbb"));
-		Assert.assertEquals("aaa \n\\section{bbb}\n ",p.visit(s));
-		
-	}
 	
 
 	
@@ -358,6 +317,54 @@ public class TestLatexVisitor {
 	LatexPrinter p = new LatexPrinter();
 	Assert.assertTrue(p.visit(t).contains("|r|"));
 	
+	}
+	
+	@Test
+	public void test_that_empty_simple_table_returns_nothing() throws Exception {
+		SimpleTable t = new SimpleTable();
+		LatexPrinter p = new LatexPrinter();
+		Assert.assertEquals("",p.visit(t));
+	}
+	
+	@Test
+	public void test_that_simple_table_with_one_line_is_printed() throws Exception {
+		SimpleTable t = new SimpleTable();
+		t.add("test1");
+		LatexPrinter p = new LatexPrinter();
+		Assert.assertTrue(p.visit(t).contains("\\begin{tabular}{|l|}"));
+		Assert.assertTrue(p.visit(t).contains("test1"));
+		Assert.assertTrue(p.visit(t).contains("\\end{tabular}"));
+		Assert.assertTrue(p.visit(t).contains("\\hline"));
+	}
+	
+	@Test
+	public void test_that_simple_table_with_two_lines_is_printed() throws Exception {
+		SimpleTable t = new SimpleTable();
+		t.add("test1");
+		t.newline();
+		t.add("test2");
+		LatexPrinter p = new LatexPrinter();
+		Assert.assertTrue(p.visit(t).contains("\\begin{tabular}{|l|}"));
+		Assert.assertTrue(p.visit(t).contains("test1"));
+		Assert.assertTrue(p.visit(t).contains("test2"));
+		Assert.assertTrue(p.visit(t).contains("\\end{tabular}"));
+	}
+	
+	@Test 
+	public void test_print_row_value_with_one_value_in_the_row() throws Exception{
+		LatexPrinter p = new LatexPrinter();
+		SimpleTable t = new SimpleTable();
+		t.add("test1");
+		Assert.assertEquals("test1 \\\\  \\hline \n",p.printRowValue(t, 0));
+	}
+	
+	@Test 
+	public void test_print_row_value_with_two_valueq_in_the_row() throws Exception{
+		LatexPrinter p = new LatexPrinter();
+		SimpleTable t = new SimpleTable();
+		t.add("test1");
+		t.add("test2");
+		Assert.assertEquals("test1 & test2 \\\\  \\hline \n",p.printRowValue(t, 0));
 	}
 	
 	@Test

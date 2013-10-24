@@ -13,6 +13,7 @@ import core.printing.BasicElementImplementation;
 import core.printing.Image;
 import core.printing.NewLine;
 import core.printing.NewPage;
+import core.printing.Paragraph;
 import core.printing.Quote;
 import core.printing.Section;
 import core.printing.Sequence;
@@ -130,6 +131,12 @@ public class DocXPrinter implements PrintingVisitor {
 
 	@Override
 	public String visit(BasicElementImplementation element) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String visit(Paragraph element) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

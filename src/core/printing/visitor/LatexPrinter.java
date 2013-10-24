@@ -1,9 +1,13 @@
 package core.printing.visitor;
 
 
+import java.awt.Color;
+
+import core.printing.BasicElement;
 import core.printing.Image;
 import core.printing.NewLine;
 import core.printing.NewPage;
+import core.printing.Paragraph;
 import core.printing.Quote;
 import core.printing.Section;
 import core.printing.Sequence;
@@ -117,17 +121,34 @@ private String getContent(TablePrinter t) throws Exception {
 	  }
 	  returned += "\\hline\n";
 	  returned += "\\hline\n";
-	  for (int i = 1; i < t.getNumberOfRow();i++){
-		  for (int j = 0; j < t.getNumberOfCellsCurrentline()-1;j++){
-			  returned += printCell(t.getCell(i, j));
-			  returned += " & ";
-		  }
-		  returned += printCell(t.getCell(i, t.getNumberOfCellsCurrentline()-1));
-		  returned += " \\\\  \\hline \n";
+	  int StartingRow = 1;
+	  returned+= getPrinterTableContentFromRow(t, StartingRow);
+	return returned;
+}
+
+private String getPrinterTableContentFromRow(SimpleTable simpleTable, int StartingRow)
+		throws Exception {
+	String resultTableContent = "";
+	  for (int i = StartingRow; i < simpleTable.getNumberOfRow();i++){
+		  String rowValue = printRowValue(simpleTable, i);
+		  
+		  resultTableContent +=rowValue;
 		  
 		  
 	  }
-	return returned;
+	return resultTableContent;
+}
+
+protected String printRowValue(SimpleTable t, int i) throws Exception {
+	String rowValue ="";
+	  
+	  for (int j = 0; j < t.getNumberOfCellsCurrentline()-1;j++){
+		  rowValue += printCell(t.getCell(i, j));
+		  rowValue += " & ";
+	  }
+	  rowValue += printCell(t.getCell(i, t.getNumberOfCellsCurrentline()-1));
+	  rowValue += " \\\\  \\hline \n";
+	return rowValue;
 }
 
 private String getClosing(TablePrinter t) {
@@ -137,6 +158,16 @@ private String getClosing(TablePrinter t) {
 	  }else{
 		  returned += "\\end{tabularx}\n\n";
 	  }
+	return returned;
+}
+
+private String getAlignement(SimpleTable t) {
+	String returned = "";
+	  returned +=  "{|l|";
+	  for (int j=1;j<t.getMaxNumberOfCol();j++){
+		  returned += "l|"; 
+	  }
+	  returned += "}\n";
 	return returned;
 }
 
@@ -161,6 +192,22 @@ private String getTabularOpen(TablePrinter t) throws Exception {
 	return returnval;
 }
 
+@Override
+public String visit(SimpleTable simpleTable) throws Exception {
+	if (simpleTable.getNumberOfRow()==0){
+		return "";
+	}
+	String result = "\\begin{tabular}";
+	result += getAlignement(simpleTable);		
+	result += "\\hline\n";
+	result += getPrinterTableContentFromRow(simpleTable, 0);
+	result += "\\end{tabular}";
+	return result;
+
+	
+	
+}
+
 /**
  * @param c The cell to print in LAtex
  * @return A String containing the latex representation of the cell.
@@ -172,7 +219,7 @@ private String printCell(CellPrinter c) throws Exception {
 		  result += "\\multicolumn{" + c.getColspan() + "}{|" + c.getColspantype() + "|}{";  
 	  }
 		  
-	  if (c.getColor()!=null){
+	  if (c.getColor()!=null && c.getColor()!= Color.WHITE){
 		  result +=  "\\cellcolor{" + c.getColor() + "} ";
 	  }
 	  result +=  c.getContent().accept(this) ;
@@ -197,7 +244,9 @@ public String visit(Section section) throws Exception {
 	if (this.sectionlevel==3) {result += "\n\\paragraph{"+ latexize(section.getTitle()) + "}\n";}
 	
 	this.sectionlevel++;
-	result += section.getContent().accept(this);
+	for (BasicElement e:section.getChildren()){
+	  result += e.accept(this)+" ";
+	}
 	this.sectionlevel--;
 	return result;
 }
@@ -238,12 +287,52 @@ public String visit(Quote quote) throws Exception {
 	return "\\quote{" + quote.getContent().accept(this) + "} " ;
 }
 
-@Override
-public String visit(SimpleTable simpleTable) {
-
-	
-	return null;
+public String beginEnvironment(String val){
+	String result = "\\begin{";
+	result+=val;
+	result += "}\n";
+	return result;
 }
+
+public String endEnvironment(String val){
+	String result = "\\end{";
+	result+=val;
+	result += "}\n";
+	return result;
+}
+
+public String encloseInEnvironement(String environement,String value){
+	String result = "";
+	result+= beginEnvironment(environement);
+	result+= value;
+	result+= "\n" + endEnvironment(environement);
+	return result;
+	
+}
+
+@Override
+public String visit(Paragraph element) throws Exception {
+	
+	String content;
+	if (!element.hasChildren()){
+		return "";
+	} else {
+		content = element.accept(this);
+	}
+	if (element.getAlignement().equals(ALIGN.CENTER)){
+		return encloseInEnvironement("center",content);
+	}
+	if (element.getAlignement().equals(ALIGN.RIGHT)){
+		return encloseInEnvironement("flushright",content);
+	}
+	return content;
+}
+
+
+
+
+
+
 
 
 }

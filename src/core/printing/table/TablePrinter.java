@@ -11,6 +11,7 @@ import core.printing.table.alignment.TableAlignement;
 import core.printing.table.size.FixedSize;
 import core.printing.table.size.SpecialSize;
 import core.printing.table.size.TableSize;
+import core.printing.visitor.PrintingVisitor;
 
 public class TablePrinter extends SimpleTable implements BasicElement{
 	
@@ -171,6 +172,9 @@ public void setSize(String size) {
 	this.size = new SpecialSize(size);
 }
 
-
+@Override
+public String accept(PrintingVisitor visitor) throws Exception {
+	return visitor.visit(this);
+}
   
 }

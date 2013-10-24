@@ -5,31 +5,25 @@ import core.printing.visitor.PrintingVisitor;
 public class Section extends BasicElementWithChild {
 	
 	String title;
-	Sequence content = new Sequence();
 	
 	
 	
 
 	public SimpleText addText(String s) throws Exception {
-		return content.addText(s);
+		SimpleText result = new SimpleText(s);
+		this.add(result);
+		return result;
 	}
 
 
 
-	public Sequence getContent() {
-		return content;
-	}
+	
 
 
-
-	public void setContent(Sequence content) {
-		this.content = content;
-	}
-
-
-
-	public Section addSection(String s) {
-		return content.addSection(s);
+	public Section addSection(String s) throws Exception {
+		Section result = new Section(s);
+		this.add(result);
+		return result;
 	}
 
 
@@ -37,7 +31,7 @@ public class Section extends BasicElementWithChild {
 	public Section(String title, Sequence content) {
 		super();
 		this.title = title;
-		this.content = content;
+		this.children.add(content);
 	}
 
 
@@ -49,9 +43,6 @@ public class Section extends BasicElementWithChild {
 
 
 
-	public void add(BasicElement e) throws Exception {
-		content.add(e);
-	}
 
 
 
@@ -63,6 +54,16 @@ public class Section extends BasicElementWithChild {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+
+
+
+
+
+	@Override
+	public String accept(PrintingVisitor visitor) throws Exception {
+		return visitor.visit(this);
 	}
 
 

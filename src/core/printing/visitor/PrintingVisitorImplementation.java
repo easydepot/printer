@@ -1,6 +1,7 @@
 package core.printing.visitor;
 
 import core.printing.BasicElementImplementation;
+import core.printing.Paragraph;
 import core.printing.Section;
 import core.printing.SimpleText;
 import core.printing.table.SimpleTable;
@@ -18,6 +19,9 @@ public abstract class PrintingVisitorImplementation implements PrintingVisitor{
 		
 		if (element.getClass().equals(Section.class)){
 			return visit((Section) element);
+		}
+		if (element.getClass().equals(Paragraph.class)){
+			return visit((Paragraph) element);
 		}
 		throw new Exception("Class" + element.getClass().getName() + " is not handled");
 	

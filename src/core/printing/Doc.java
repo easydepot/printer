@@ -284,7 +284,7 @@ public class Doc {
 		return q;
 	}
 
-	public void addSection(String s) {
+	public void addSection(String s) throws Exception {
 		if (this.getCurrentElement().getClass().equals(core.printing.Section.class)){
 		  push(((Section)this.getCurrentElement()).addSection(s));
 		}

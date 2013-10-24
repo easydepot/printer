@@ -19,6 +19,26 @@ public class TestSimpleTable {
 		Assert.assertEquals(0, sut.getNumberOfRow());
 	}
 	
+	@Test
+	public void test_that_first_addCell_does_not_need_a_call_to_newline() {
+		sut.addCell(new CellPrinter("text1"));
+	}
+	
+	@Test
+	public void test_that_first_add_does_not_need_a_call_to_newline() {
+		sut.add(new SimpleText("text1"));
+	}
+	
+	@Test
+	public void test_that_getMaxNumberOfCol_returns_first_line_number_of_col(){
+		
+		sut.add(new SimpleText("text1"));
+		sut.add(new SimpleText("text1"));
+		sut.newline();
+		sut.add(new SimpleText("text1"));
+		Assert.assertEquals(2, sut.getMaxNumberOfCol());
+	}
+	
 
 	@Test
 	public void test_newLine() {
@@ -64,6 +84,16 @@ public class TestSimpleTable {
 			
 
 		}
+		
+	}
+	
+	@Test
+	public void test_addStringContent() throws Exception {
+		sut.newline();
+		String e = "text1";
+		sut.add(e);
+		Assert.assertEquals(e, ((SimpleText)sut.getCellContent(0, 0)).getText());
+			
 		
 	}
 	

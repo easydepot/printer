@@ -1,8 +1,13 @@
 package core.printing.visitor;
 
+import java.util.ArrayList;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+import core.printing.BasicElement;
+import core.printing.BasicElementImplementation;
+import core.printing.BasicElementWithChild;
 import core.printing.Section;
 import core.printing.SimpleText;
 
@@ -16,6 +21,26 @@ public class TestLatexSection {
 		Assert.assertEquals("\n\\section{title}\n",p.visit(s));
 		
 	}
+	
+	@Test
+	public void test_Section_as_BasicElementImplementation() throws Exception {
+		LatexPrinter p = new LatexPrinter();
+		BasicElementImplementation s = new Section("title");
+	
+		Assert.assertEquals("\n\\section{title}\n",p.visit(s));
+		
+	}
+	
+	@Test
+	public void test_Section_as_BasicElementWithChild() throws Exception {
+		LatexPrinter p = new LatexPrinter();
+		BasicElementWithChild s = new Section("title");
+	
+		Assert.assertEquals("\n\\section{title}\n",p.visit(s));
+		
+	}
+	
+	
 	
 	@Test
 	public void test_Section_with_latexprotectedcharacter() throws Exception {

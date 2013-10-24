@@ -4,6 +4,7 @@ import core.printing.BasicElementImplementation;
 import core.printing.Image;
 import core.printing.NewLine;
 import core.printing.NewPage;
+import core.printing.Paragraph;
 import core.printing.Quote;
 import core.printing.Section;
 import core.printing.Sequence;
@@ -18,7 +19,7 @@ import core.printing.table.size.SpecialSize;
 public interface PrintingVisitor {
 	
 	
-	    String visit(SimpleTable simpleTable);
+	    String visit(SimpleTable simpleTable) throws Exception;
 	    String visit(ListItem listPrint) throws Exception;
 	    String visit(SimpleText engine) throws Exception;
 	    String visit(TablePrinter body) throws Exception;
@@ -32,6 +33,7 @@ public interface PrintingVisitor {
 		String visit(Image image);
 		String visit(Quote quote) throws Exception;
 		String visit(BasicElementImplementation element) throws Exception;
+		String visit(Paragraph element) throws Exception;
 	
 
 }

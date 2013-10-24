@@ -5,8 +5,8 @@ import core.printing.visitor.PrintingVisitor;
 public class Quote extends BasicElementWithChild {
 
 	
-	Sequence content = new Sequence();
-	public Sequence getContent() {
+	BasicElementWithChild content = new Sequence();
+	public BasicElementWithChild getContent() {
 		return content;
 	}
 

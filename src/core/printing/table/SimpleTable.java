@@ -4,6 +4,8 @@ import java.util.Vector;
 
 import core.printing.BasicElement;
 import core.printing.BasicElementWithChild;
+import core.printing.SimpleText;
+import core.printing.visitor.PrintingVisitor;
 
 public class SimpleTable extends BasicElementWithChild  {
 	
@@ -31,11 +33,14 @@ public class SimpleTable extends BasicElementWithChild  {
 
 
 	public void add(BasicElement e) {
-		this.currentline.addCell(new CellPrinter(e));
+		this.addCell(new CellPrinter(e));
 		
 	}
 	
 	 public void addCell(CellPrinter cellPrinter){
+		  if (currentline==null){
+			  this.newline();
+		  }
 		  currentline.addCell(cellPrinter);
 	  }
 
@@ -67,6 +72,26 @@ public class SimpleTable extends BasicElementWithChild  {
 		if (row >= this.lines.size()){
 			  throw new Exception("Row " + row + "is not defined" );
 		  }
+	}
+
+	public void add(String e) {
+	  SimpleText element = new SimpleText(e);
+	  this.add(element);
+		
+	}
+
+	public int getMaxNumberOfCol() {
+		if (isEmpty()) {return 0;}
+		return this.lines.get(0).getNumberOfCells();
+	}
+
+	public boolean isEmpty() {
+		return this.lines.size()==0;
+	}
+	
+	@Override
+	public String accept(PrintingVisitor visitor) throws Exception {
+		return visitor.visit(this);
 	}
 	  	  
 }

@@ -1,5 +1,7 @@
 package core.printing;
 
+import core.printing.visitor.PrintingVisitor;
+
 
 public class SimpleText extends BasicElementImplementation{
 	String text;
@@ -47,6 +49,10 @@ public class SimpleText extends BasicElementImplementation{
 		this.text = text;
 	}
 
+	@Override
+	public String accept(PrintingVisitor visitor) throws Exception {
+		return visitor.visit(this);
+	}
 
 
 	
