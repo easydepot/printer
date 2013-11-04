@@ -12,7 +12,25 @@ public class Paragraph extends BasicElementWithChild {
 
 	public void setAlignement(ALIGN alignement) {
 		this.alignement = alignement;
-	} 
+	}
+
+	@Override
+	public boolean hasSection(String sectionTitle) {
+		
+		return false;
+	}
+
+	@Override
+	public boolean hasText(String text) {
+		for (BasicElement child: this.children){
+			if (child.hasText(text)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	
 	
    
 	

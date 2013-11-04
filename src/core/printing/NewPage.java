@@ -14,6 +14,21 @@ public class NewPage  implements BasicElement  {
 	public void newline() {
 	}
 
+
+
+	@Override
+	public boolean hasSection(String sectionTitle) {
+		return false;
+	}
+
+
+
+	@Override
+	public boolean hasText(String text) {
+	
+		return false;
+	}
+
 	
 
 

@@ -9,6 +9,17 @@ public class NewLine  implements BasicElement  {
 		  return visitor.visit(this);
 	}
 
+	@Override
+	public boolean hasSection(String sectionTitle) {
+		return false;
+	}
+
+	@Override
+	public boolean hasText(String text) {
+		
+		return false;
+	}
+
 
 
 	

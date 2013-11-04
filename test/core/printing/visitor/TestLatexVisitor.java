@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import core.printing.Section;
-import core.printing.Sequence;
 import core.printing.SimpleText;
 import core.printing.WarningText;
 import core.printing.table.SimpleTable;
@@ -21,7 +20,10 @@ import core.printing.table.size.SpecialSize;
 public class TestLatexVisitor {
 	
 
-	
+	@Test
+	public void test_fullPage(){
+		D
+	}
 	
 	
 	@Test
@@ -118,7 +120,7 @@ public class TestLatexVisitor {
 			LatexPrinter.latexize(null);
 			fail("must throw an exception");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

@@ -4,6 +4,7 @@ package core.printing.visitor;
 import java.awt.Color;
 
 import core.printing.BasicElement;
+import core.printing.Box;
 import core.printing.Image;
 import core.printing.NewLine;
 import core.printing.NewPage;
@@ -326,6 +327,16 @@ public String visit(Paragraph element) throws Exception {
 		return encloseInEnvironement("flushright",content);
 	}
 	return content;
+}
+
+@Override
+public String visit(Box element) throws Exception {
+	String s = "\\boxput*(0,1){\\colorbox{white}{\\textbf{" + element.getTitle() + "}}}";
+	s += "{\\setlength{\\fboxsep}{12pt}";
+	s += "\\shadowbox{\\begin{minipage}[c]{\\linewidth}";
+	s += element.getContent().accept(this);
+	s += "\\end{minipage}}}";
+	return s;
 }
 
 

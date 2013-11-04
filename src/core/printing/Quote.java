@@ -36,6 +36,12 @@ public class Quote extends BasicElementWithChild {
 		
 	}
 
+	@Override
+	public boolean hasSection(String sectionTitle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	
 
 	

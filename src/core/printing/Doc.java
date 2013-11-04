@@ -235,6 +235,7 @@ public class Doc {
 		result += "\\usepackage{tabularx}\n";
 		result += "\\usepackage[pdftex]{graphicx}\n";
 		result += "\\usepackage[table]{xcolor}\n";
+		result += "\\usepackage{fancybox}\n";
 		result += "\\title{" + title + "}\n";
 		for (int i = 0; i < this.listProperty.size();i++){
 			result += "\\" + this.get(i).getKey() + "{" + this.get(i).getValue() + "}\n";
@@ -313,6 +314,41 @@ public class Doc {
 		result += this.mainSeq.accept(v);
 		result += this.getLatexOutro();
 		return result;
+	}
+
+
+
+
+
+	public boolean hasSection(String sectionTitle) {
+		
+		for (int i = 0; i < this.mainSeq.size();i++){
+			if (this.mainSeq.get(i).getClass().equals(Section.class)){
+			  Section s = (Section) this.mainSeq.get(i);
+			  if (s.getTitle().contentEquals(sectionTitle)) {
+				return true;
+			  }
+			}
+			if (this.mainSeq.get(i).hasSection(sectionTitle)){
+					return true;
+			}
+			
+		}
+		return false;
+	}
+
+
+
+
+
+	public boolean hasText(String text) {
+		for (int i = 0; i < this.mainSeq.size();i++){
+			if (this.mainSeq.get(i).hasText(text)){
+				return true;
+				
+		}
+		}
+		return false;
 	}
 	
 	

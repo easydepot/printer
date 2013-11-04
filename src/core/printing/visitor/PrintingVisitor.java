@@ -1,6 +1,7 @@
 package core.printing.visitor;
 
 import core.printing.BasicElementImplementation;
+import core.printing.Box;
 import core.printing.Image;
 import core.printing.NewLine;
 import core.printing.NewPage;
@@ -34,6 +35,7 @@ public interface PrintingVisitor {
 		String visit(Quote quote) throws Exception;
 		String visit(BasicElementImplementation element) throws Exception;
 		String visit(Paragraph element) throws Exception;
+		String visit(Box element) throws Exception;
 	
 
 }

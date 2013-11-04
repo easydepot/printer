@@ -32,6 +32,16 @@ public abstract class BasicElementWithChild extends BasicElementImplementation{
 	public boolean hasChildren() {
 		return getChildren().size()!=0;
 	}
+	
+	@Override
+	public boolean hasText(String text) {
+		for (BasicElement child: this.children){
+			if (child.hasText(text)){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	
 

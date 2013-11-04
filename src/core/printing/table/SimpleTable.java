@@ -93,5 +93,11 @@ public class SimpleTable extends BasicElementWithChild  {
 	public String accept(PrintingVisitor visitor) throws Exception {
 		return visitor.visit(this);
 	}
+
+	@Override
+	public boolean hasSection(String sectionTitle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	  	  
 }

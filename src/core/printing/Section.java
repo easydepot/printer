@@ -4,6 +4,24 @@ import core.printing.visitor.PrintingVisitor;
 
 public class Section extends BasicElementWithChild {
 	
+	@Override
+	public boolean hasSection(String sectionTitle) {
+		if (this.title.equals(sectionTitle)){
+			return true;
+		}
+		for (BasicElement e: this.children){
+			if (e.hasSection(sectionTitle)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+
+
+
+
 	String title;
 	
 	

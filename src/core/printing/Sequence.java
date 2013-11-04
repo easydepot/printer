@@ -43,6 +43,18 @@ public class Sequence extends BasicElementWithChild {
 
 
 
+	@Override
+	public boolean hasSection(String sectionTitle) {
+		for (BasicElement e: this.children){
+			if (e.hasSection(sectionTitle)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+
 	
 
 

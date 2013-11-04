@@ -58,5 +58,13 @@ public void add(BasicElement e) throws Exception {
 
 
 
+@Override
+public boolean hasSection(String sectionTitle) {
+	
+	return false;
+}
+
+
+
 
 }

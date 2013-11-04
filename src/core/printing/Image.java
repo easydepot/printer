@@ -43,6 +43,17 @@ public void setFile(File file) {
 	this.file = file;
 }
 
+@Override
+public boolean hasSection(String sectionTitle) {
+	return false;
+}
+
+@Override
+public boolean hasText(String text) {
+	
+	return false;
+}
+
 
 
 }

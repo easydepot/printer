@@ -26,6 +26,17 @@ public class FixedSize extends TableSize {
 			return visitor.visit(this);
 		}
 
+		@Override
+		public boolean hasSection(String sectionTitle) {
+			
+			return false;
+		}
+
+		@Override
+		public boolean hasText(String text) {
+			return false;
+		}
+
 		
 		
 		

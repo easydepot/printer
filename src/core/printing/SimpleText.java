@@ -54,6 +54,17 @@ public class SimpleText extends BasicElementImplementation{
 		return visitor.visit(this);
 	}
 
+	@Override
+	public boolean hasSection(String sectionTitle) {
+		return false;
+	}
+
+	@Override
+	public boolean hasText(String text) {
+		
+		return this.text.contains(text);
+	}
+
 
 	
 
