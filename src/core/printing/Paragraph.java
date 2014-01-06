@@ -2,7 +2,7 @@ package core.printing;
 
 import core.printing.table.alignment.ClassicAlignement.ALIGN;
 
-public class Paragraph extends BasicElementWithChild {
+public class Paragraph extends BasicElementWithChildren {
 	
 	ALIGN alignement = ALIGN.LEFT;
 

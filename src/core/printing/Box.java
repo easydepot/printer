@@ -2,8 +2,7 @@ package core.printing;
 
 import core.printing.visitor.PrintingVisitor;
 
-public class Box extends BasicElementImplementation {
-	BasicElement content;
+public class Box extends BasicElementWithChild {
 	String title;
 	public Box(BasicElement content, String title) {
 		super();
@@ -13,22 +12,10 @@ public class Box extends BasicElementImplementation {
 	public String getTitle() {
 		return title;
 	}
-	public BasicElement getContent() {
-		return this.content;
-	}
 	@Override
 	public String accept(PrintingVisitor visitor) throws Exception {
 	
 		return visitor.visit(this);
-	}
-	@Override
-	public boolean hasSection(String sectionTitle) {
-		return this.content.hasSection(sectionTitle);
-	}
-	@Override
-	public boolean hasText(String text) {
-		
-		return content.hasText(text);
 	}
 	
 	

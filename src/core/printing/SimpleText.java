@@ -7,6 +7,7 @@ public class SimpleText extends BasicElementImplementation{
 	String text;
 	boolean italic = false;
 	boolean bold = false;
+	boolean strikeTrough = false;
 	String color;
 	
 
@@ -22,6 +23,14 @@ public class SimpleText extends BasicElementImplementation{
 
 	public boolean isItalic() {
 		return italic;
+	}
+	
+	public boolean isStrikeThrough() {
+		return strikeTrough;
+	}
+	
+	public void setStrikeThough(){
+		this.strikeTrough = true;
 	}
 
 	public void setItalic(boolean italic) {
@@ -63,6 +72,14 @@ public class SimpleText extends BasicElementImplementation{
 	public boolean hasText(String text) {
 		
 		return this.text.contains(text);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		if (this.text.contentEquals("")){
+			return true;
+		}
+		return false;
 	}
 
 

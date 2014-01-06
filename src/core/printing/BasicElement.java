@@ -8,6 +8,7 @@ public interface BasicElement {
 
 	public boolean hasSection(String sectionTitle);
 	public boolean hasText(String text);
+	public boolean isEmpty();
 	  
 
 

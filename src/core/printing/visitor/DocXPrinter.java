@@ -10,6 +10,7 @@ import org.docx4j.wml.P;
 import org.docx4j.wml.STBrType;
 
 import core.printing.BasicElementImplementation;
+import core.printing.BasicElementWithChildren;
 import core.printing.Box;
 import core.printing.Image;
 import core.printing.NewLine;
@@ -17,7 +18,6 @@ import core.printing.NewPage;
 import core.printing.Paragraph;
 import core.printing.Quote;
 import core.printing.Section;
-import core.printing.Sequence;
 import core.printing.SimpleText;
 import core.printing.TableOfContent;
 import core.printing.list.ListItem;
@@ -64,7 +64,7 @@ public class DocXPrinter implements PrintingVisitor {
 	}
 
 	@Override
-	public String visit(Sequence body) {
+	public String visit(BasicElementWithChildren body) {
 		// TODO Auto-generated method stub
 		return null;
 	}

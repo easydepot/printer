@@ -1,6 +1,7 @@
 package core.printing.visitor;
 
 import core.printing.BasicElementImplementation;
+import core.printing.BasicElementWithChildren;
 import core.printing.Box;
 import core.printing.Image;
 import core.printing.NewLine;
@@ -8,7 +9,6 @@ import core.printing.NewPage;
 import core.printing.Paragraph;
 import core.printing.Quote;
 import core.printing.Section;
-import core.printing.Sequence;
 import core.printing.SimpleText;
 import core.printing.TableOfContent;
 import core.printing.list.ListItem;
@@ -24,7 +24,7 @@ public interface PrintingVisitor {
 	    String visit(ListItem listPrint) throws Exception;
 	    String visit(SimpleText engine) throws Exception;
 	    String visit(TablePrinter body) throws Exception;
-	    String visit(Sequence body) throws Exception;
+	    String visit(BasicElementWithChildren body) throws Exception;
 		String visit(FixedSize fixedSize);
 		String visit(SpecialSize specialSize);
 		String visit(Section section) throws Exception;
