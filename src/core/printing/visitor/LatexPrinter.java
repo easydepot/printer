@@ -4,6 +4,7 @@ package core.printing.visitor;
 import java.awt.Color;
 
 import core.printing.BasicElement;
+import core.printing.BasicElementWithChildren;
 import core.printing.Box;
 import core.printing.Image;
 import core.printing.NewLine;
@@ -11,7 +12,6 @@ import core.printing.NewPage;
 import core.printing.Paragraph;
 import core.printing.Quote;
 import core.printing.Section;
-import core.printing.Sequence;
 import core.printing.SimpleText;
 import core.printing.TableOfContent;
 import core.printing.list.ListItem;
@@ -28,6 +28,7 @@ import core.printing.table.size.SpecialSize;
 public class LatexPrinter extends PrintingVisitorImplementation implements PrintingVisitor{
 	
 	int sectionlevel=0;
+	static boolean withoutfailuremode = true;
 	
   public int getSectionlevel() {
 		return sectionlevel;
@@ -38,8 +39,15 @@ public class LatexPrinter extends PrintingVisitorImplementation implements Print
 	}
 
 	public static String latexize(String s) throws Exception{
-		if (s==null){throw new Exception("Try to print a null value");}
-		return s.replace("_", "\\_\\-");
+		
+		if (s==null){
+			if (withoutfailuremode){
+				return "";
+			}
+			throw new Exception("Try to print a null value");}
+		String result = s.replace("_", "\\_\\-");
+		result = result.replace("%", "\\%");
+		return result;
 	}
 	
 public String visit(ListItem l) throws Exception{
@@ -56,11 +64,12 @@ public String visit(ListItem l) throws Exception{
   public String visit(SimpleText t) throws Exception{
 	  if (t.isBold()) return "\\textbf{" + latexize(t.getText()) +"}";
 	  if (t.isItalic()) return "\\textit{" + latexize(t.getText()) +"}";
+	  if (t.isStrikeThrough()) return "\\sout{" + latexize(t.getText()) +"}";
 	  if (t.getColor()!=null) return "\\textcolor{" + t.getColor() + "}{" + latexize(t.getText()) +"}";
 	  return  latexize(t.getText());
   }
   
-  public String visit(Sequence s) throws Exception{
+  public String visit(BasicElementWithChildren s) throws Exception{
 	  String result="";
 	  if (s == null){throw new Exception("Sequence is null");}
 	  for (int i = 0; i < s.size();i++){
@@ -223,7 +232,16 @@ private String printCell(CellPrinter c) throws Exception {
 	  if (c.getColor()!=null && c.getColor()!= Color.WHITE){
 		  result +=  "\\cellcolor{" + c.getColor() + "} ";
 	  }
-	  result +=  c.getContent().accept(this) ;
+	  if (!c.getContent().getClass().equals(ListItem.class)){
+	    result +=  c.getContent().accept(this) ;
+	  } else {
+		  result += "\\begin{minipage}{6cm}\n";
+		  result += "\\begin{medskip}\n";
+		  
+		  result +=  c.getContent().accept(this) ;
+		  result += "\\end{medskip}\n";
+		  result += "\\end{minipage}\n";
+	  }
 	  if (c.getColspan()!=0){
 		  result += "}";  
 	  }
@@ -243,6 +261,7 @@ public String visit(Section section) throws Exception {
 	if (this.sectionlevel==1) {result += "\n\\subsection{"+ latexize(section.getTitle()) + "}\n";}
 	if (this.sectionlevel==2) {result += "\n\\subsubsection{"+ latexize(section.getTitle()) + "}\n";}
 	if (this.sectionlevel==3) {result += "\n\\paragraph{"+ latexize(section.getTitle()) + "}\n";}
+	if (this.sectionlevel==4) {result += "\n\\textit{"+ latexize(section.getTitle()) + "}\n";}
 	
 	this.sectionlevel++;
 	for (BasicElement e:section.getChildren()){

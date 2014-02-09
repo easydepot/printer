@@ -3,12 +3,12 @@ package core.printing.list;
 import java.util.Vector;
 
 import core.printing.BasicElement;
-import core.printing.BasicElementWithChild;
+import core.printing.BasicElementWithChildren;
 import core.printing.Sequence;
 import core.printing.SimpleText;
 import core.printing.visitor.PrintingVisitor;
 
-public class ListItem extends BasicElementWithChild{
+public class ListItem extends BasicElementWithChildren{
    Vector<Sequence> itemPrint = new Vector<Sequence>();
    
    public void addItem(String t) throws Exception{
@@ -63,6 +63,10 @@ public boolean hasSection(String sectionTitle) {
 	
 	return false;
 }
+
+
+
+
 
 
 

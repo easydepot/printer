@@ -2,11 +2,11 @@ package core.printing;
 
 import core.printing.visitor.PrintingVisitor;
 
-public class Quote extends BasicElementWithChild {
+public class Quote extends BasicElementWithChildren {
 
 	
-	BasicElementWithChild content = new Sequence();
-	public BasicElementWithChild getContent() {
+	BasicElementWithChildren content = new Sequence();
+	public BasicElementWithChildren getContent() {
 		return content;
 	}
 

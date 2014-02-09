@@ -11,14 +11,17 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.Stack;
 
+import core.printing.list.ListItem;
+import core.printing.visitor.HTMLPrinter;
 import core.printing.visitor.LatexPrinter;
 
 public class Doc {
 	
+	public static final String CRYPTOSTD = "cryptostd";
 	String title;
 	String subtitle;
 	Sequence mainSeq = new Sequence();
-	Stack<BasicElementWithChild> stackElement = new Stack<BasicElementWithChild>();
+	Stack<BasicElementWithChildren> stackElement = new Stack<BasicElementWithChildren>();
 	boolean Landscape = false; 
 	String documentClass = "scrartcl";
 	Bibliography bibliography = new Bibliography();
@@ -125,6 +128,17 @@ public class Doc {
 		  e.printStackTrace();
 	  }
 	}
+	
+	public void printHTML() throws Exception{
+		  try {
+			writer = new PrintWriter(new BufferedWriter(new FileWriter(this.getPath())));
+			writer.write(this.getHTML());
+			writer.close();
+		  } catch (IOException e) {
+			  // TODO Auto-generated catch block
+			  e.printStackTrace();
+		  }
+		}
 			
 	
 
@@ -167,7 +181,7 @@ public class Doc {
 	}
 
 
-	public BasicElementWithChild getCurrentElement() {
+	public BasicElementWithChildren getCurrentElement() {
 		return stackElement.peek();
 	}
 
@@ -177,7 +191,7 @@ public class Doc {
 	}
 
 
-	public BasicElement push(BasicElementWithChild item) {
+	public BasicElement push(BasicElementWithChildren item) {
 		return stackElement.push(item);
 	}
 
@@ -205,7 +219,6 @@ public class Doc {
 	public Doc() {
 		super();
 		push(this.mainSeq);
-		this.specificcommands.add("\\maketitle");
 	}
 	
 	
@@ -220,6 +233,12 @@ public class Doc {
 	}
 
 	private String getLatexIntro(){
+		if(!this.documentClass.contentEquals(CRYPTOSTD)) {
+			  this.specificcommands.add("\\maketitle");
+			} else {
+				this.specificcommands.add("\\maketitlec");
+			}
+		
 		String result="";
 		if (this.Landscape){
 		  result += "\\documentclass[francais,landscape]{" + this.documentClass + "}\n";
@@ -234,13 +253,20 @@ public class Doc {
 		result += "\\usepackage[pdftex]{graphicx}\n";
 		result += "\\usepackage[table]{xcolor}\n";
 		result += "\\usepackage{fancybox}\n";
+		result += "\\usepackage{geometry}\n"; 
+		result += "\\usepackage{ulem}\n"; 
 		result += "\\title{" + title + "}\n";
 		for (int i = 0; i < this.listProperty.size();i++){
 			result += "\\" + this.get(i).getKey() + "{" + this.get(i).getValue() + "}\n";
 		}
 		result += "\\subtitle{" + subtitle + "}\n";
 		result += "\\begin{document}\n";
-		for (int i = 0; i < this.specificcommands.size();i++){
+		
+		int startindex = 0;
+		if (this.titlePageDisabled){
+			startindex = 1;
+		}
+		for (int i = startindex; i < this.specificcommands.size();i++){
 			result += this.specificcommands.get(i) +"\n";
 		}
 		
@@ -314,7 +340,14 @@ public class Doc {
 		return result;
 	}
 
-
+	public String getHTML() throws Exception{
+		String result="";
+		HTMLPrinter v = new HTMLPrinter();
+		//result += this.getLatexIntro();
+		result += this.mainSeq.accept(v);
+		//result += this.getLatexOutro();
+		return result;
+	}
 
 
 
@@ -348,6 +381,31 @@ public class Doc {
 		}
 		return false;
 	}
+
+
+
+    boolean titlePageDisabled = false;
+
+	public void disableTitlePage() {
+		titlePageDisabled = true;	
+		
+	}
+
+
+
+
+
+	public core.printing.list.ListItem addListItem() throws Exception {
+		ListItem l = new ListItem();
+		this.getCurrentElement().add(l);
+		return l;
+	}
+
+
+
+
+
+
 	
 	
 	

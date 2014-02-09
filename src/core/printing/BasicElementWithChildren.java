@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import core.printing.visitor.PrintingVisitor;
 
-public abstract class BasicElementWithChild extends BasicElementImplementation{
+public abstract class BasicElementWithChildren extends BasicElementImplementation{
 	
 	
 	protected ArrayList<BasicElement> children = new ArrayList<BasicElement>();
@@ -43,6 +43,30 @@ public abstract class BasicElementWithChild extends BasicElementImplementation{
 		return false;
 	}
 
+	public BasicElement get(int index) {
+		return children.get(index);
+	}
+
+	public int size() {
+		return children.size();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		for (BasicElement e: this.children){
+			if (!e.isEmpty()){return false;}
+		}
+		return true;
+	}
+	@Override
+	public boolean hasSection(String sectionTitle) {
+		for (BasicElement e: this.children){
+			if (e.hasSection(sectionTitle)){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 
 

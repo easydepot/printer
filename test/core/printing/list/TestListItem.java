@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import core.printing.Sequence;
+import core.printing.BasicElementWithChildren;
 import core.printing.SimpleText;
 import core.printing.visitor.LatexPrinter;
 
@@ -28,14 +28,14 @@ public class TestListItem {
 	@Test
 	public void test_that_addItem_addTheItemto_the_list() throws Exception {
 		sut.addItem(ITEM1);
-		Assert.assertEquals(ITEM1, ((SimpleText)((Sequence)sut.get(0)).get(0)).getText());
+		Assert.assertEquals(ITEM1, ((SimpleText)((BasicElementWithChildren)sut.get(0)).get(0)).getText());
 	}
 	
 	@Test
 	public void test_that_addItemBasicElement_addTheItemto_the_list() throws Exception {
 		SimpleText simpleText = new SimpleText(ITEM1);
 		sut.addItem(simpleText);
-		Assert.assertEquals(ITEM1, ((SimpleText)((Sequence)sut.get(0)).get(0)).getText());
+		Assert.assertEquals(ITEM1, ((SimpleText)((BasicElementWithChildren)sut.get(0)).get(0)).getText());
 	}
 	
 	@Test
@@ -44,8 +44,8 @@ public class TestListItem {
 		sut.addItem(simpleText);
 		SimpleText simpleText2 = new SimpleText("ITEM2");
 		sut.continueItem(simpleText2);
-		Assert.assertEquals(ITEM1, ((SimpleText)((Sequence)sut.get(0)).get(0)).getText());
-		Assert.assertEquals("ITEM2", ((SimpleText)((Sequence)sut.get(0)).get(1)).getText());
+		Assert.assertEquals(ITEM1, ((SimpleText)((BasicElementWithChildren)sut.get(0)).get(0)).getText());
+		Assert.assertEquals("ITEM2", ((SimpleText)((BasicElementWithChildren)sut.get(0)).get(1)).getText());
 	}
 	
 	@Test
@@ -53,14 +53,14 @@ public class TestListItem {
 		SimpleText simpleText = new SimpleText(ITEM1);
 		sut.continueItem(simpleText);
 		
-		Assert.assertEquals(ITEM1, ((SimpleText)((Sequence)sut.get(0)).get(0)).getText());
+		Assert.assertEquals(ITEM1, ((SimpleText)((BasicElementWithChildren)sut.get(0)).get(0)).getText());
 	}
 	
 	@Test
 	public void test_that_addBasicElement_addTheItemto_the_list() throws Exception {
 		SimpleText simpleText = new SimpleText(ITEM1);
 		sut.add(simpleText);
-		Assert.assertEquals(ITEM1, ((SimpleText)((Sequence)sut.get(0)).get(0)).getText());
+		Assert.assertEquals(ITEM1, ((SimpleText)((BasicElementWithChildren)sut.get(0)).get(0)).getText());
 	}
 	
 	@Test

@@ -4,19 +4,7 @@ import java.util.Iterator;
 
 import core.printing.visitor.PrintingVisitor;
 
-public class Sequence extends BasicElementWithChild {
-	
-	
-	public BasicElement get(int index) {
-		return children.get(index);
-	}
-
-	
-
-	public int size() {
-		return children.size();
-	}
-
+public class Sequence extends BasicElementWithChildren {
 	
 	
 	public SimpleText addText(String s) throws Exception{
@@ -43,15 +31,7 @@ public class Sequence extends BasicElementWithChild {
 
 
 
-	@Override
-	public boolean hasSection(String sectionTitle) {
-		for (BasicElement e: this.children){
-			if (e.hasSection(sectionTitle)){
-				return true;
-			}
-		}
-		return false;
-	}
+	
 
 
 

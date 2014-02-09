@@ -2,7 +2,7 @@ package core.printing;
 
 import core.printing.visitor.PrintingVisitor;
 
-public class NewPage  implements BasicElement  {
+public class NewPage  extends TokenElement  {
 
 	@Override
 	public String accept(PrintingVisitor visitor) {
@@ -15,19 +15,6 @@ public class NewPage  implements BasicElement  {
 	}
 
 
-
-	@Override
-	public boolean hasSection(String sectionTitle) {
-		return false;
-	}
-
-
-
-	@Override
-	public boolean hasText(String text) {
-	
-		return false;
-	}
 
 	
 

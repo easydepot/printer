@@ -3,11 +3,11 @@ package core.printing.table;
 import java.util.Vector;
 
 import core.printing.BasicElement;
-import core.printing.BasicElementWithChild;
+import core.printing.BasicElementWithChildren;
 import core.printing.SimpleText;
 import core.printing.visitor.PrintingVisitor;
 
-public class SimpleTable extends BasicElementWithChild  {
+public class SimpleTable extends BasicElementWithChildren  {
 	
 	Vector<LinePrinter> lines = new Vector<LinePrinter>();
 	LinePrinter currentline;

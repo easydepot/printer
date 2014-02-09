@@ -7,12 +7,16 @@ import org.junit.Test;
 
 import core.printing.BasicElement;
 import core.printing.BasicElementImplementation;
-import core.printing.BasicElementWithChild;
+import core.printing.BasicElementWithChildren;
 import core.printing.Section;
 import core.printing.SimpleText;
 
-public class TestLatexSection {
+public class TestLatexSection implements TestSection {
 
+	/* (non-Javadoc)
+	 * @see core.printing.visitor.TestSection#test_Section()
+	 */
+	@Override
 	@Test
 	public void test_Section() throws Exception {
 		LatexPrinter p = new LatexPrinter();
@@ -22,6 +26,10 @@ public class TestLatexSection {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see core.printing.visitor.TestSection#test_Section_as_BasicElementImplementation()
+	 */
+	@Override
 	@Test
 	public void test_Section_as_BasicElementImplementation() throws Exception {
 		LatexPrinter p = new LatexPrinter();
@@ -31,10 +39,14 @@ public class TestLatexSection {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see core.printing.visitor.TestSection#test_Section_as_BasicElementWithChild()
+	 */
+	@Override
 	@Test
 	public void test_Section_as_BasicElementWithChild() throws Exception {
 		LatexPrinter p = new LatexPrinter();
-		BasicElementWithChild s = new Section("title");
+		BasicElementWithChildren s = new Section("title");
 	
 		Assert.assertEquals("\n\\section{title}\n",p.visit(s));
 		
@@ -42,6 +54,10 @@ public class TestLatexSection {
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see core.printing.visitor.TestSection#test_Section_with_latexprotectedcharacter()
+	 */
+	@Override
 	@Test
 	public void test_Section_with_latexprotectedcharacter() throws Exception {
 		LatexPrinter p = new LatexPrinter();
@@ -51,6 +67,10 @@ public class TestLatexSection {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see core.printing.visitor.TestSection#test_Sectiob_SubSection()
+	 */
+	@Override
 	@Test
 	public void test_Sectiob_SubSection() throws Exception {
 		LatexPrinter p = new LatexPrinter();
@@ -63,6 +83,10 @@ public class TestLatexSection {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see core.printing.visitor.TestSection#test_SubSection()
+	 */
+	@Override
 	@Test
 	public void test_SubSection() throws Exception {
 		LatexPrinter p = new LatexPrinter();
@@ -74,6 +98,10 @@ public class TestLatexSection {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see core.printing.visitor.TestSection#test_SubSubSection()
+	 */
+	@Override
 	@Test
 	public void test_SubSubSection() throws Exception {
 		LatexPrinter p = new LatexPrinter();
@@ -85,6 +113,10 @@ public class TestLatexSection {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see core.printing.visitor.TestSection#test_Paragraph()
+	 */
+	@Override
 	@Test
 	public void test_Paragraph() throws Exception {
 		LatexPrinter p = new LatexPrinter();
@@ -96,6 +128,10 @@ public class TestLatexSection {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see core.printing.visitor.TestSection#test_Section_withText()
+	 */
+	@Override
 	@Test
 	public void test_Section_withText() throws Exception {
 		LatexPrinter p = new LatexPrinter();
@@ -105,6 +141,10 @@ public class TestLatexSection {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see core.printing.visitor.TestSection#test_Section_withTwoText()
+	 */
+	@Override
 	@Test
 	public void test_Section_withTwoText() throws Exception {
 		LatexPrinter p = new LatexPrinter();

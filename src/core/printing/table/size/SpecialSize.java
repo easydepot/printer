@@ -36,6 +36,12 @@ public class SpecialSize
 			return false;
 		}
 
+		@Override
+		public boolean isEmpty() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
 		
 		  
 	  }

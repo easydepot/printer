@@ -54,6 +54,12 @@ public boolean hasText(String text) {
 	return false;
 }
 
+@Override
+public boolean isEmpty() {
+	
+	return false;
+}
+
 
 
 }

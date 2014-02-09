@@ -2,7 +2,7 @@ package core.printing;
 
 import core.printing.visitor.PrintingVisitor;
 
-public class Section extends BasicElementWithChild {
+public class Section extends BasicElementWithChildren {
 	
 	@Override
 	public boolean hasSection(String sectionTitle) {
@@ -46,7 +46,7 @@ public class Section extends BasicElementWithChild {
 
 
 
-	public Section(String title, Sequence content) {
+	public Section(String title, BasicElementWithChildren content) {
 		super();
 		this.title = title;
 		this.children.add(content);
