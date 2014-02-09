@@ -159,9 +159,7 @@ public class Doc {
 	}
 
 
-	public boolean empty() {
-		return stackElement.empty();
-	}
+	
 
 
 	public void setDocumentClass(String documentClass) {
