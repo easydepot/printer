@@ -67,6 +67,12 @@ public abstract class BasicElementWithChildren extends BasicElementImplementatio
 		}
 		return false;
 	}
+
+	public SimpleText addText(String s) throws Exception {
+		SimpleText result = new SimpleText(s);
+		this.add(result);
+		return result;
+	}
 	
 
 

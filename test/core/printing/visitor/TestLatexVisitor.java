@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
 
+import core.printing.BasicElementWithChildren;
 import core.printing.Doc;
 import core.printing.Section;
 import core.printing.SimpleText;
@@ -178,6 +179,32 @@ public class TestLatexVisitor implements TestVisitor {
 	}
 	
 	@Test
+	public void test_that_latexize_protect_number_min() throws Exception {
+		Assert.assertEquals(" \\no ", LatexPrinter.latexize(" n° "));
+	}
+	
+	@Test
+	public void test_that_latexize_replace_number() throws Exception {
+		Assert.assertEquals(" ° ", LatexPrinter.latexize(" ˚ "));
+	}
+	
+	
+	
+	@Test
+	public void test_that_latexize_fi() throws Exception {
+		Assert.assertEquals(" fi ", LatexPrinter.latexize(" ﬁ "));
+	}
+	
+	
+	
+	@Test
+	public void test_that_latexize_protect_number_maj() throws Exception {
+		Assert.assertEquals(" \\No ", LatexPrinter.latexize(" N° "));
+	}
+	
+	
+	
+	@Test
 	public void test_latexize_when_underscore() throws Exception {
 		Assert.assertEquals("a\\_\\-a", LatexPrinter.latexize("a_a"));
 	}
@@ -185,13 +212,8 @@ public class TestLatexVisitor implements TestVisitor {
 	@Test
 	public void test_latexize_when_null() throws Exception {
 		
-		try {
-			LatexPrinter.latexize(null);
-			fail("must throw an exception");
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
+	   Assert.assertEquals("", LatexPrinter.latexize(null));
+		
 	}
 	
 	/* (non-Javadoc)
@@ -220,7 +242,7 @@ public class TestLatexVisitor implements TestVisitor {
 	public void test_Sectiob_SubSection() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		Section s = new Section("title");
-		Section s2 = new Section("subtitle");
+		BasicElementWithChildren s2 = new Section("subtitle");
 		s.add(s2);
 	  
 		Assert.assertEquals("\n\\section{title}\n\n\\subsection{subtitle}\n ",p.visit(s));

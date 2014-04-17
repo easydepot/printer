@@ -2,12 +2,25 @@ package core.printing;
 
 import core.printing.visitor.PrintingVisitor;
 
-public class Box extends BasicElementWithChild {
+public class Box extends BasicElementWithChildren {
 	String title;
 	public Box(BasicElement content, String title) {
 		super();
-		this.content = content;
+		this.children.add(content);
 		this.title = title;
+	}
+	public Box(BasicElement content) {
+		super();
+		this.children.add(content);
+	}
+	
+	public Box(Sequence content) {
+		super();
+		this.children.add(content);
+	}
+	public Box() {
+		super();
+		
 	}
 	public String getTitle() {
 		return title;
@@ -17,6 +30,12 @@ public class Box extends BasicElementWithChild {
 	
 		return visitor.visit(this);
 	}
+	
+	//@deprecated
+	public BasicElement getContent() {
+		return this.getChildren().get(0);
+	}
+
 	
 	
 

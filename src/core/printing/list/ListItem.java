@@ -66,6 +66,15 @@ public boolean hasSection(String sectionTitle) {
 
 
 
+public SimpleText addText(String text) throws Exception {
+	SimpleText s = new SimpleText(text);
+	this.addItem(s);
+	return s;
+	
+}
+
+
+
 
 
 
