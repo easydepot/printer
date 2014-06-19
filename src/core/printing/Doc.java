@@ -191,7 +191,7 @@ public class Doc {
 	}
 
 
-	public BasicElement push(BasicElementWithChildren item) {
+	private BasicElement push(BasicElementWithChildren item) {
 		return stackElement.push(item);
 	}
 
@@ -233,10 +233,11 @@ public class Doc {
 	}
 
 	private String getLatexIntro(){
-		if(!this.documentClass.contentEquals(CRYPTOSTD)) {
-			  this.specificcommands.add("\\maketitle");
+		if(this.documentClass.contentEquals(CRYPTOSTD) || this.documentClass.contentEquals("universign") ) {
+			this.specificcommands.add("\\maketitlec");
 			} else {
-				this.specificcommands.add("\\maketitlec");
+				 this.specificcommands.add("\\maketitle");
+				
 			}
 		
 		String result="";
@@ -249,10 +250,13 @@ public class Doc {
 		result += "\\usepackage{ifthen}\n";
 		result += "\\usepackage{multirow}\n";
 		result += "\\usepackage[utf8]{inputenc}\n";
+		if(!this.documentClass.contentEquals("universign")){
 		result += "\\usepackage{tabularx}\n";
 		result += "\\usepackage[pdftex]{graphicx}\n";
-		result += "\\usepackage[table]{xcolor}\n";
-		result += "\\usepackage{fancybox}\n";
+		
+		  result += "\\usepackage[table]{xcolor}\n";
+		  result += "\\usepackage{fancybox}\n";
+		}
 		result += "\\usepackage{geometry}\n"; 
 		result += "\\usepackage{ulem}\n"; 
 		result += "\\title{" + title + "}\n";
@@ -293,8 +297,16 @@ public class Doc {
 		if (this.getCurrentElement() == mainSeq){
 			return this.mainSeq.addText(s);
 			
+		} else {
+			return this.getCurrentElement().addText(s);
 		}
-		return ((Section) this.getCurrentElement()).addText(s);
+		/*if (this.getCurrentElement().getClass().isAssignableFrom(Section.class)){
+		  return ((BasicElementWithChildren) this.getCurrentElement()).addText(s);
+		}
+		if (this.getCurrentElement().getClass().isAssignableFrom(Box.class)){
+			  return ((Box) this.getCurrentElement()).addText(s);
+			}
+		return null;*/
 	}
 	
 	public Image addImage(String s) throws Exception {
@@ -400,6 +412,22 @@ public class Doc {
 		this.getCurrentElement().add(l);
 		return l;
 	}
+
+
+
+
+
+	public void addBox() throws Exception {
+		Box b = new Box();
+		this.getCurrentElement().add(b);
+		this.push(b);
+	}
+
+
+
+
+
+	
 
 
 

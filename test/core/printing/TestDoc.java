@@ -18,6 +18,25 @@ public class TestDoc {
 		Assert.assertEquals("text", t.getText());
 	}
 	
+	@Test
+	public void test_thatAddBox_put_Box_at_current_element() throws Exception {
+		Doc doc = new Doc();
+		doc.addBox();
+		Assert.assertEquals(Box.class, doc.getCurrentElement().getClass());
+		
+	}
+	
+	@Test
+	public void test_thatAddBox_add_text_to_the_box_content() throws Exception {
+		Doc doc = new Doc();
+		doc.addBox();
+		doc.addText("test");
+		Assert.assertEquals(1, doc.getCurrentElement().getChildren().size());
+		Assert.assertEquals("test", ((SimpleText)doc.getCurrentElement().get(0)).getText());
+		
+	}
+	
+	
 	
 	
 	

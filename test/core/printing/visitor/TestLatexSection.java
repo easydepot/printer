@@ -75,7 +75,7 @@ public class TestLatexSection implements TestSection {
 	public void test_Sectiob_SubSection() throws Exception {
 		LatexPrinter p = new LatexPrinter();
 		Section s = new Section("title");
-		Section s2 = new Section("subtitle");
+		BasicElementWithChildren s2 = new Section("subtitle");
 		s.add(s2);
 	    System.out.print(p.visit(s));
 	  

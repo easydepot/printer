@@ -3,6 +3,7 @@ package core.printing.visitor;
 
 import java.awt.Color;
 
+import core.printer.helper.StringReplace;
 import core.printing.BasicElement;
 import core.printing.BasicElementWithChildren;
 import core.printing.Box;
@@ -45,9 +46,14 @@ public class LatexPrinter extends PrintingVisitorImplementation implements Print
 				return "";
 			}
 			throw new Exception("Try to print a null value");}
-		String result = s.replace("_", "\\_\\-");
-		result = result.replace("%", "\\%");
-		return result;
+		StringReplace sr = new StringReplace(s);
+		sr.replace("_", "\\_\\-");
+		sr.replace("%", "\\%");
+		sr.replace("˚","°" );
+		sr.replace("N°", "\\No");
+		sr.replace("n°", "\\no");
+		sr.replace("ﬁ", "fi");
+		return sr.getResult();
 	}
 	
 public String visit(ListItem l) throws Exception{
@@ -350,12 +356,25 @@ public String visit(Paragraph element) throws Exception {
 
 @Override
 public String visit(Box element) throws Exception {
-	String s = "\\boxput*(0,1){\\colorbox{white}{\\textbf{" + element.getTitle() + "}}}";
-	s += "{\\setlength{\\fboxsep}{12pt}";
-	s += "\\shadowbox{\\begin{minipage}[c]{\\linewidth}";
-	s += element.getContent().accept(this);
-	s += "\\end{minipage}}}";
+	String s = "";
+	if (element.getTitle()!=null){
+	 s += "\\boxput*(0,1){\\colorbox{white}{\\textbf{" + element.getTitle() + "}}}";
+	 s += "{\\setlength{\\fboxsep}{12pt}";
+	 s += visitInBox(element); 
+	 s += "\\end{minipage}}}";
+	} else {
+		 s += visitInBox(element);
+	}
 	return s;
+}
+
+private String visitInBox(Box element) throws Exception {
+	 String res = "\\shadowbox{\\begin{minipage}[c]{\\linewidth}";
+	 for (BasicElement e: element.getChildren()){
+	   res += e.accept(this);
+	 }
+	 res += "\\end{minipage}}";
+	return res;
 }
 
 

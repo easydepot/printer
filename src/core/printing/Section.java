@@ -27,17 +27,6 @@ public class Section extends BasicElementWithChildren {
 	
 	
 
-	public SimpleText addText(String s) throws Exception {
-		SimpleText result = new SimpleText(s);
-		this.add(result);
-		return result;
-	}
-
-
-
-	
-
-
 	public Section addSection(String s) throws Exception {
 		Section result = new Section(s);
 		this.add(result);

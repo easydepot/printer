@@ -18,20 +18,20 @@ public class TestBox  {
 	
 	@Test
 	public void test_getContent() {
-		BasicElementWithChild sut = givenABoxWithTitleAndContent();
+		Box sut = givenABoxWithTitleAndContent();
 		assertEquals(CONTENT,sut.getContent());
 	}
 	
 
 	@Test
 	public void test_isEmpty_returns_false_if_content_is_not_empty() {
-		BasicElementWithChild sut = givenABoxWithTitleAndContent();
+		Box sut = givenABoxWithTitleAndContent();
 		assertFalse(sut.isEmpty());
 	}
 	
 	@Test
 	public void test_isEmpty_returns_true_if_content_is_empty() {
-		BasicElementWithChild sut = new Box(new SimpleText(""), TITLE);
+		Box sut = new Box(new SimpleText(""), TITLE);
 		assertTrue(sut.isEmpty());
 	}
 	
@@ -42,6 +42,11 @@ public class TestBox  {
 	public static Box givenABoxWithTitleAndContent() {
 		
 		Box sut = new Box(CONTENT, TITLE);
+		return sut;
+	}
+public static Box givenABoxWithoutTitleButContent() {
+		
+		Box sut = new Box(CONTENT, null);
 		return sut;
 	}
 	
