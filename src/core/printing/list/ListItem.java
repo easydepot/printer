@@ -75,6 +75,17 @@ public SimpleText addText(String text) throws Exception {
 
 
 
+@Override
+public String getText() {
+	String result = "";
+	for (BasicElement e: this.children){
+		result += "- " + e.getText() + "\n";
+	}
+	return result;
+}
+
+
+
 
 
 

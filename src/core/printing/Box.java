@@ -35,6 +35,11 @@ public class Box extends BasicElementWithChildren {
 	public BasicElement getContent() {
 		return this.getChildren().get(0);
 	}
+	@Override
+	public String getText() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	
 	

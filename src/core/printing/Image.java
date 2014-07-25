@@ -60,6 +60,12 @@ public boolean isEmpty() {
 	return false;
 }
 
+@Override
+public String getText() {
+	// TODO Auto-generated method stub
+	return "";
+}
+
 
 
 }

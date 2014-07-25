@@ -30,6 +30,11 @@ public class Paragraph extends BasicElementWithChildren {
 		return false;
 	}
 
+	@Override
+	public String getText() {
+		return "";
+	}
+
 	
 	
    

@@ -16,6 +16,14 @@ public class NewPage  extends TokenElement  {
 
 
 
+	@Override
+	public String getText() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+
+
+
 	
 
 

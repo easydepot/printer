@@ -75,6 +75,13 @@ public class Section extends BasicElementWithChildren {
 
 
 
+	@Override
+	public String getText() {
+		return "#" + this.getTitle();
+	}
+
+
+
 
 
 

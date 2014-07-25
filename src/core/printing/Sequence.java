@@ -29,6 +29,15 @@ public class Sequence extends BasicElementWithChildren {
 		return result;
 	}
 
+	@Override
+	public String getText() {
+		String result = "";
+		for (BasicElement e:this.children){
+			result += e.getText();
+		}
+		return result;
+	}
+
 
 
 	

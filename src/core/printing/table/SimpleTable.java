@@ -99,5 +99,11 @@ public class SimpleTable extends BasicElementWithChildren  {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public String getText() {
+		// TODO Auto-generated method stub
+		return "";
+	}
 	  	  
 }

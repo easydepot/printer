@@ -15,7 +15,7 @@ public abstract class BasicElementWithChildren extends BasicElementImplementatio
 
 	public void add(BasicElement e) throws Exception{
 		
-			if (e==null){throw new Exception("Try to add a Null element");}
+			if (e==null){throw new Exception("Error:Try to add a Null element. context:" + this.getText());}
 			children.add(e);
 		
 	}

@@ -42,6 +42,11 @@ public class Quote extends BasicElementWithChildren {
 		return false;
 	}
 
+	@Override
+	public String getText() {
+		return "";
+	}
+
 	
 
 	

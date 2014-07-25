@@ -9,6 +9,12 @@ public class TableOfContent  extends TokenElement {
 		  return visitor.visit(this);
 	}
 
+	@Override
+	public String getText() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+
 
 
 	
