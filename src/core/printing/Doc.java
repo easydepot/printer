@@ -294,6 +294,9 @@ public class Doc {
 	}
 
 	public SimpleText addText(String s) throws Exception {
+		if (s==null){
+			s="";
+		}
 		if (this.getCurrentElement() == mainSeq){
 			return this.mainSeq.addText(s);
 			
@@ -322,6 +325,9 @@ public class Doc {
 	}
 
 	public void addSection(String s) throws Exception {
+		if (s==null){
+			throw new Exception("try to add a null section");
+		}
 		if (this.getCurrentElement().getClass().equals(core.printing.Section.class)){
 		  push(((Section)this.getCurrentElement()).addSection(s));
 		}

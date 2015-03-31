@@ -70,14 +70,24 @@ public class HTMLPrinter extends PrintingVisitorImplementation {
 	}
 	
 	private String printCell(CellPrinter c) throws Exception {
-		return c.getContent().accept(this);
+		if (c.getContent()!=null){
+		  return c.getContent().accept(this);
+		}
+		else {
+			return "";
+		}
 	}
 	
 	private String htmlize(String s){
+		if (s== null) {return "";};
 		String result = s.replace("é", "&eacute;");
 		result = result.replace("è", "&egrave;");
 		result = result.replace("ê", "&ecirc;");
 		result = result.replace("â", "&acirc;");
+		result = result.replace("ô", "&ocirc;");
+		result = result.replace("à", "&agrave;");
+		result = result.replace("ç", "&ccedil;");
+		result = result.replace("î", "&icirc;");
 		return result;
 		
 	}
